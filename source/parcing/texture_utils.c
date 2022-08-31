@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:33 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/08/30 19:49:17 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/08/31 15:46:24 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,14 @@ void	color_data(t_data **data, t_color *data_color, char *color, int type)
 		(*data_color).g = ft_atoi(tab[1]);
 		(*data_color).b = ft_atoi(tab[2]);
 	}
-	else
+	else if (!(*data)->error)
 		(*data)->error = ft_strdup("error color no valid");
-	if ((*data_color).r < 0 || (*data_color).g < 0
-		|| (*data_color).b < 0 || (*data_color).r > 255
-		|| (*data_color).g > 255 || (*data_color).b > 255)
+	if (((*data_color).r < 0 || (*data_color).g < 0
+			|| (*data_color).b < 0 || (*data_color).r > 255
+			|| (*data_color).g > 255 || (*data_color).b > 255) \
+			&& !(*data)->error)
 		(*data)->error = ft_strdup("error color no valid");
 	ft_free_tab(tab);
-}
-
-void	pre_storage_texture(t_data **data, char *line, char **variable)
-{
-	if (!*variable)
-		(*data)->texture.check++;
-	(*variable) = ft_strdup(line);
 }
 
 void	storage_color(t_data **data, char *line, t_color *variable, int type)
@@ -52,6 +46,13 @@ void	storage_color(t_data **data, char *line, t_color *variable, int type)
 	if (variable->r == -1)
 		(*data)->texture.check++;
 	color_data(data, variable, line, type);
+}
+
+void	pre_storage_texture(t_data **data, char *line, char **variable)
+{
+	if (!*variable)
+		(*data)->texture.check++;
+	(*variable) = ft_strdup(line);
 }
 
 void	texture_to_data(t_data **data, char *line, int size, int type)
@@ -75,7 +76,7 @@ void	texture_to_data(t_data **data, char *line, int size, int type)
 		storage_color(data, line, &((*data)->texture.floor), F);
 	else if (type == C)
 		storage_color(data, line, &((*data)->texture.ceilling), C);
-	else
+	else if (!(*data)->error)
 		(*data)->error = ft_strdup("error texture not valide");
 	free(line);
 	close(fd);
@@ -95,6 +96,6 @@ void	texture_storage(t_data **data, char *line)
 		texture_to_data(data, line, 2, F);
 	else if (!ft_strncmp(line, "C ", 2))
 		texture_to_data(data, line, 2, C);
-	else
-		(*data)->error = ft_strdup("error texture");
+	else if (!(*data)->error)
+		(*data)->error = ft_strdup("error: texture no complete");
 }

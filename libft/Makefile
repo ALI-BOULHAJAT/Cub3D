@@ -46,27 +46,30 @@ BONUS_SRCS = 	ft_lstnew.c \
 				ft_lstmap.c \
 
 NAME = libft.a
+
 CC = cc
-CFlAGS = -Wall -Wextra -Werror -I .
+
+CFlAGS = -Wall -Wextra -Werror
 
 OBJECT = $(SRCS:.c=.o)
 
 BONUS_OBJECT = $(BONUS_SRCS:.c=.o)
 
-
+%.o:%.c
+	@$(CC) $(CFlAGS) -c $<  -o  $@
 
 all : $(NAME)
 
 $(NAME) : $(OBJECT)
-	ar rc $(NAME) $(OBJECT)
+	@ar rc $(NAME) $(OBJECT)
 
 bonus : $(OBJECT) $(BONUS_OBJECT)
-	ar rc $(NAME) $(OBJECT) $(BONUS_OBJECT)
+	@ar rc $(NAME) $(OBJECT) $(BONUS_OBJECT)
 
 clean :
-	rm -f $(OBJECT) $(BONUS_OBJECT)
+	@rm -f $(OBJECT) $(BONUS_OBJECT)
 fclean : clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 re : fclean all
 
 .PHONY : clean fclean all re bonus

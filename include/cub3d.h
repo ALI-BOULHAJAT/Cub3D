@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/08/30 19:38:30 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/08/31 15:55:57 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,10 @@ void	texture_to_data(t_data **data, char *line, int size, int type);
 void	texture_storage(t_data **data, char *line);
 int		file_type(char *file, char *type);
 void	ft_free_tab(char **tab);
+void	map_size(t_data **data, char *file);
+void	init_struct(t_data **data);
+int		empty_line(char *line);
+void	close_map(t_data **data);
+int		check_circle(char **map, int x, int y);
 
 #endif
