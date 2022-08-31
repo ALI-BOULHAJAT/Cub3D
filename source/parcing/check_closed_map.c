@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 10:57:52 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/08/31 15:56:58 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/08/31 18:18:35 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	close_map(t_data **data)
 
 	map = (*data)->map;
 	x = 0;
-	while (map[x] && !(*data)->error)
+	while (!(*data)->error && map[x])
 	{
 		y = 0;
 		while (map[x][y] && !(*data)->error)

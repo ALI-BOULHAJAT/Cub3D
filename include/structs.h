@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:58:17 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/08/31 13:17:36 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/08/31 18:21:58 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_texture
 	int		check;
 	int		map_size;
 	int		n_player;
+	int		is_empty_line;
 	int		read_in_map;
 	t_color	floor;
 	t_color	ceilling;

@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 19:32:01 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/08/31 13:17:56 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/08/31 18:47:57 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,12 @@ void	map_size(t_data **data, char *file)
 				count_line++;
 			free(line);
 		}
-		(*data)->texture.map_size = count_line - 6;
+		if (count_line == 0)
+			(*data)->error = ft_strdup("Empty file");
+		else if (count_line < 6)
+			(*data)->error = ft_strdup("No map");
+		else
+			(*data)->texture.map_size = count_line - 6;
 	}
 	close (fd);
 }
@@ -78,6 +83,7 @@ void	init_struct(t_data **data)
 	(*data)->texture.check = 0;
 	(*data)->texture.read_in_map = 0;
 	(*data)->texture.n_player = 0;
+	(*data)->texture.is_empty_line = 0;
 	init_color(&((*data)->texture.floor));
 	init_color(&((*data)->texture.ceilling));
 }

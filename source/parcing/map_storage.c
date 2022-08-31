@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:50:06 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/08/31 15:45:52 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/08/31 18:31:12 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	empty_line(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] != ' ' && line[i] != '\n')
+		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
 			return (0);
 		i++;
 	}
@@ -54,10 +54,15 @@ void	pre_while(t_data **data, char *line, int *index, int *i_map)
 		else if (check_texture_done(data) && !(*data)->error)
 		{
 			if (empty_line(line) && !(*data)->error)
-				(*data)->error = ft_strdup("error : empty line in map");
-			(*data)->texture.read_in_map = 1;
-			(*data)->map[(*i_map)] = ft_strdup(line);
-			(*i_map)++;
+				(*data)->texture.is_empty_line = 1;
+			else if ((*data)->texture.is_empty_line == 1)
+				(*data)->error = ft_strdup("empty line in map");
+			else
+			{
+				(*data)->texture.read_in_map = 1;
+				(*data)->map[(*i_map)] = ft_strdup(line);
+				(*i_map)++;
+			}
 		}
 	}
 	(*data)->map[(*i_map)] = NULL;
@@ -89,16 +94,16 @@ void	read_map(t_data *data, char **av)
 	int		fd;
 	int		index;
 
+	init_struct(&data);
 	map_size(&data, av[1]);
 	fd = open(av[1], O_RDONLY);
-	init_struct(&data);
 	index = 0;
-	if (fd > 0 && file_type(av[1], ".cub"))
+	if (fd > 0 && file_type(av[1], ".cub") && !data->error)
 	{
 		while_loop(&data, fd);
 		close_map(&data);
 	}
-	else
+	else if (!data->error)
 		data->error = ft_strdup("file not valid");
 	close(fd);
 }
