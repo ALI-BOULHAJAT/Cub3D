@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/08/31 15:55:57 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/01 13:28:07 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,12 @@
 # include "../libft/libft.h"
 # include "utils.h"
 # include "macros.h"
+# include <mlx.h>
 
 # define FLOOR  0
 # define CEILLING 0
+# define HIEGHT 1200
+# define LENGHT 1600
 
 /////////////// PARCING ///////////////////////
 
@@ -39,5 +42,9 @@ void	init_struct(t_data **data);
 int		empty_line(char *line);
 void	close_map(t_data **data);
 int		check_circle(char **map, int x, int y);
+
+/////////////  DRAWING ///////////////////////
+
+void	drawing(t_data *data);
 
 #endif

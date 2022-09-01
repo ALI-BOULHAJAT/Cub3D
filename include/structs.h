@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:58:17 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/08/31 18:21:58 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/01 11:00:57 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,18 @@ typedef struct s_color
 	int	b;
 
 }	t_color;
+
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		bit_img;
+	int		d_size;
+	int		endian;
+	void	*mlx;
+	void	*win;
+
+}	t_img;
 
 typedef struct s_texture
 {
@@ -42,8 +54,9 @@ typedef struct s_texture
 
 typedef struct s_data
 {
-	char		**map;
 	t_texture	texture;
+	t_img		*img;
+	char		**map;
 	char		*error;
 
 }	t_data;

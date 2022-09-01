@@ -1,6 +1,6 @@
 NAME = cub3d
 
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 CC = cc
 
@@ -8,13 +8,17 @@ CC = cc
 
 PARC_DIR = ./source/parcing
 
+DRAW_DIR = ./source/drawing
+
 UTIL_DIR = ./source/utils
 
 LIBFT_DIR = ./libft
 
 ########################
 
-SRCS = ${PARC_DIR}/cub3d.c ${PARC_DIR}/map_storage.c ${PARC_DIR}/texture_utils.c ${PARC_DIR}/map_utils.c ${PARC_DIR}/check_closed_map.c ${PARC_DIR}/check_circle.c ${UTIL_DIR}/get_next_line.c ${UTIL_DIR}/get_next_line_utils.c
+SRCS = ${PARC_DIR}/cub3d.c ${PARC_DIR}/map_storage.c ${PARC_DIR}/texture_utils.c ${PARC_DIR}/map_utils.c ${PARC_DIR}/check_closed_map.c ${PARC_DIR}/check_circle.c \
+		${DRAW_DIR}/ft_window.c \
+		${UTIL_DIR}/get_next_line.c ${UTIL_DIR}/get_next_line_utils.c
 
 OBJS = $(SRCS:%.c=%.o)
 
@@ -24,7 +28,7 @@ _libft :
 	@ make bonus -C $(LIBFT_DIR)
 
 $(NAME) : $(OBJS) _libft
-	@$(CC)  $(CFLAGS) $(OBJS) $(LIBFT_DIR)/libft.a -o $(NAME)
+	@$(CC)  $(CFLAGS) $(OBJS) $(LIBFT_DIR)/libft.a -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 	@printf "\x1b[32m  ✅     Make successfully    💯 ✅\033[0m\n"
 
 %.o:%.c $(SRCS)
