@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:46:36 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/01 13:19:27 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/01 17:45:19 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,7 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	else
-	{
 		read_map(&data, av);
-		drawing(&data);
-	}
 	if (data.error)
 	{
 		printf("\x1b[31m Error \033[0m\n");
@@ -55,9 +52,10 @@ int	main(int ac, char **av)
 	}
 	else
 	{
-		print_data(data);
-		system("leaks cub3d");
-		printf("\ndone\n");
+		drawing(&data);
 	}
 	return (0);
 }
+		// system("leaks cub3d");
+		// print_data(data);
+		// printf("\ndone\n");

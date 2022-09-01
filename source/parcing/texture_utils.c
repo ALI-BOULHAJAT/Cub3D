@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:33 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/08/31 15:46:24 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/01 16:32:47 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void	texture_to_data(t_data **data, char *line, int size, int type)
 
 void	texture_storage(t_data **data, char *line)
 {
+	while (*line == ' ')
+		line += 1;
 	if (!ft_strncmp(line, "NO ", 3))
 		texture_to_data(data, line, 3, NO);
 	else if (!ft_strncmp(line, "SO ", 3))
