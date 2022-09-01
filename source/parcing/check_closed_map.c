@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 10:57:52 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/08/31 18:18:35 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/01 09:19:18 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,20 @@ void	check_player(t_data **data, char **map, int x, int y)
 	}
 }
 
+void	while_closed(t_data **data, char **map, int x, int *y)
+{
+	if (map[x][*y] == '\t')
+		(*data)->error = ft_strdup("error white-space in the map");
+	else if ((*data)->texture.n_player > 1 \
+		|| char_in_str(PLAY_EMPT, map[x][*y]))
+		check_player(data, map, x, *y);
+	else if (char_in_str(WALL_SPAC, map[x][*y]))
+		;
+	else if (!(*data)->error)
+		(*data)->error = ft_strdup("invalid caracter in map");
+	(*y)++;
+}
+
 void	close_map(t_data **data)
 {
 	int		x;
@@ -51,16 +65,7 @@ void	close_map(t_data **data)
 	{
 		y = 0;
 		while (map[x][y] && !(*data)->error)
-		{
-			if ((*data)->texture.n_player > 1 \
-				|| char_in_str(PLAY_EMPT, map[x][y]))
-				check_player(data, map, x, y);
-			else if (char_in_str(WALL_SPAC, map[x][y]))
-				;
-			else if (!(*data)->error)
-				(*data)->error = ft_strdup("invalid caracter in map");
-			y++;
-		}
+			while_closed(data, map, x, &y);
 		x++;
 	}
 	if ((*data)->texture.n_player == 0 && !(*data)->error)

@@ -1,6 +1,6 @@
 NAME = cub3d
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
 
 CC = cc
 
@@ -25,7 +25,7 @@ _libft :
 
 $(NAME) : $(OBJS) _libft
 	@$(CC)  $(CFLAGS) $(OBJS) $(LIBFT_DIR)/libft.a -o $(NAME)
-	@printf "\x1b[32m  ✅    Make successfully     ✅\033[0m\n"
+	@printf "\x1b[32m  ✅     Make successfully    💯 ✅\033[0m\n"
 
 %.o:%.c $(SRCS)
 	@$(CC) $(CFLAGS) -c $<  -o  $@
@@ -36,7 +36,7 @@ clean :
 
 fclean : clean
 	@rm -rf $(NAME)
-	@printf "\x1b[36m  ✅ Make fclean successfully ✅\033[0m\n"
+	@printf "\x1b[36m  ✅ Make fclean successfully 💯 ✅\033[0m\n"
 
 re : fclean all
 
