@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:58:17 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/02 17:44:26 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/03 18:15:45 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,19 @@ typedef struct s_img
 
 }	t_img;
 
+typedef struct s_player
+{
+	int		n_player;
+	double	init_x_player;
+	double	init_y_player;
+	double	player_x;
+	double	player_y;
+	int		to_north;
+	int		to_south;
+	int		to_east;
+	int		to_west;
+}	t_player;
+
 typedef struct s_texture
 {
 	char	*north;
@@ -44,13 +57,8 @@ typedef struct s_texture
 	char	*west;
 	int		check;
 	int		map_size;
-	int		n_player;
 	int		is_empty_line;
 	int		read_in_map;
-	int		init_x_player;
-	int		init_y_player;
-	double	player_x;
-	double	player_y;
 	int		zoom;
 	t_color	floor;
 	t_color	ceilling;
@@ -60,6 +68,7 @@ typedef struct s_texture
 typedef struct s_data
 {
 	t_texture	texture;
+	t_player	player;
 	t_img		*img;
 	char		**map;
 	char		*error;

@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/02 18:39:09 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/03 19:48:05 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,7 @@ int		check_circle(char **map, int x, int y);
 void	drawing(t_data *data);
 void	drow_to_img(t_data *data);
 void	my_new_window(int x, int y, t_data *data, int color);
+void	draw_circle(t_data *data);
+void	check_key(t_data *data, int key);
 
 #endif

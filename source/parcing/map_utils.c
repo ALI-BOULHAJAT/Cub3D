@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 19:32:01 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/02 16:21:40 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/03 17:51:44 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,17 @@ void	init_struct(t_data **data)
 	(*data)->texture.west = NULL;
 	(*data)->texture.check = 0;
 	(*data)->texture.read_in_map = 0;
-	(*data)->texture.n_player = 0;
+	(*data)->player.n_player = 0;
 	(*data)->texture.is_empty_line = 0;
 	(*data)->img->d_size = 0;
 	(*data)->img->endian = 0;
 	(*data)->texture.zoom = 25;
-	(*data)->texture.player_x = 0;
-	(*data)->texture.player_y = 0;
+	(*data)->player.player_x = 0;
+	(*data)->player.player_y = 0;
+	(*data)->player.to_east = 1;
+	(*data)->player.to_north = 1;
+	(*data)->player.to_south = 1;
+	(*data)->player.to_west = 1;
 	init_color(&((*data)->texture.floor));
 	init_color(&((*data)->texture.ceilling));
 }

@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "libft.h": "c",
-        "utils.h": "c"
+        "utils.h": "c",
+        "bitset": "c"
     }
 }

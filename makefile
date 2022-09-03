@@ -17,7 +17,7 @@ LIBFT_DIR = ./libft
 ########################
 
 SRCS = ${PARC_DIR}/cub3d.c ${PARC_DIR}/map_storage.c ${PARC_DIR}/texture_utils.c ${PARC_DIR}/map_utils.c ${PARC_DIR}/check_closed_map.c ${PARC_DIR}/check_circle.c \
-		${DRAW_DIR}/ft_window.c ${DRAW_DIR}/ft_draw.c \
+		${DRAW_DIR}/ft_window.c ${DRAW_DIR}/ft_draw.c ${DRAW_DIR}/draw_circle.c ${DRAW_DIR}/ft_key.c\
 		${UTIL_DIR}/get_next_line.c ${UTIL_DIR}/get_next_line_utils.c
 
 OBJS = $(SRCS:%.c=%.o)

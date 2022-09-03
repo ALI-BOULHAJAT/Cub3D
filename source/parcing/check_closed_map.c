@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 10:57:52 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/01 09:19:18 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/03 15:23:16 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int	char_in_str(char *str, char c)
 
 void	check_player(t_data **data, char **map, int x, int y)
 {
-	if ((*data)->texture.n_player > 1 && !(*data)->error)
+	if ((*data)->player.n_player > 1 && !(*data)->error)
 		(*data)->error = ft_strdup("error : multiple players");
 	else if (char_in_str(PLAY_EMPT, map[x][y]))
 	{
 		if (check_circle(map, x, y) && !(*data)->error)
 			(*data)->error = ft_strdup("error : map no closed");
 		if (char_in_str(PLAYER, map[x][y]))
-			(*data)->texture.n_player++;
+			(*data)->player.n_player++;
 	}
 }
 
@@ -43,7 +43,7 @@ void	while_closed(t_data **data, char **map, int x, int *y)
 {
 	if (map[x][*y] == '\t')
 		(*data)->error = ft_strdup("error white-space in the map");
-	else if ((*data)->texture.n_player > 1 \
+	else if ((*data)->player.n_player > 1 \
 		|| char_in_str(PLAY_EMPT, map[x][*y]))
 		check_player(data, map, x, *y);
 	else if (char_in_str(WALL_SPAC, map[x][*y]))
@@ -68,6 +68,6 @@ void	close_map(t_data **data)
 			while_closed(data, map, x, &y);
 		x++;
 	}
-	if ((*data)->texture.n_player == 0 && !(*data)->error)
+	if ((*data)->player.n_player == 0 && !(*data)->error)
 		(*data)->error = ft_strdup("error : no player");
 }

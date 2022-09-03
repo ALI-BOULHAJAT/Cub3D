@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:18:25 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/02 19:00:46 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/03 19:42:08 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	draw_player(t_data *data, double x, double y)
 	double	y1;
 	double	y_n;
 
-	x += data->texture.player_x;
-	y += data->texture.player_y;
+	x += data->player.player_x;
+	y += data->player.player_y;
 	x *= data->texture.zoom;
 	y *= data->texture.zoom;
 	x += (data->texture.zoom / 2) - 2;
@@ -53,7 +53,7 @@ void	draw_player(t_data *data, double x, double y)
 		y_n = y;
 		while (y_n <= y1)
 		{
-			my_new_window((int)x, (int)y_n, data, 0x00bfff);
+			my_new_window(x, y_n, data, 0x00bfff);
 			y_n++;
 		}
 		x++;
@@ -81,8 +81,8 @@ void	while_draw(t_data *data, int *x)
 		draw_rectangle(data, y, *x, color);
 		if (data->map[*x][y] == 'N')
 		{
-			data->texture.init_x_player = *x;
-			data->texture.init_y_player = y;
+			data->player.init_x_player = *x + 0.5;
+			data->player.init_y_player = y + 0.5;
 		}
 		y++;
 	}
@@ -96,8 +96,7 @@ void	draw(t_data *data)
 	x = 0;
 	while (data->map[x])
 		while_draw(data, &x);
-	draw_player (data, (double)data->texture.init_y_player, \
-	(double)data->texture.init_x_player);
+	draw_circle(data);
 }
 
 void	drow_to_img(t_data *data)
@@ -109,3 +108,6 @@ void	drow_to_img(t_data *data)
 	mlx_put_image_to_window(data->img->mlx, data->img->win, data->img->img, \
 	0, 0);
 }
+
+//draw_player(data, (double)data->player.init_y_player,
+//(double)data->player.init_x_player);
