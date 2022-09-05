@@ -6,41 +6,15 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 11:19:13 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/03 19:45:20 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/05 10:49:47 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-int	ft_movekey(int key, t_data *data)
-{	
-	check_key(data, key);
-	if (key == 53)
-	{
-		mlx_destroy_window(data->img->mlx, data->img->win);
-		exit(0);
-	}
-	mlx_clear_window(data->img->mlx, data->img->win);
-	mlx_destroy_image(data->img->mlx, data->img->img);
-	drow_to_img(data);
-	return (0);
-}
-
-int	ft_close_x(t_data *data)
+int	ft_movekey(t_data *data)
 {
-	mlx_destroy_window(data->img->mlx, data->img->win);
-	exit(0);
-	return (0);
-}
-
-int	ft_zoom(int mouse, int x, int y, t_data *data)
-{
-	x = 0;
-	y = 0;
-	if (mouse == 5)
-		data->texture.zoom += 1;
-	if (mouse == 4)
-		data->texture.zoom -= 1;
+	check_key(data);
 	mlx_clear_window(data->img->mlx, data->img->win);
 	mlx_destroy_image(data->img->mlx, data->img->img);
 	drow_to_img(data);
@@ -53,10 +27,7 @@ void	drawing(t_data *data)
 	data->img->mlx = mlx_init();
 	data->img->win = mlx_new_window(data->img->mlx, LENGHT, HIEGHT, "Cub3D");
 	drow_to_img(data);
-	mlx_hook(data->img->win, 2, 0, ft_movekey, data);
-	mlx_hook(data->img->win, 17, 0, ft_close_x, data);
-	mlx_hook(data->img->win, 4, 0, ft_zoom, data);
-	mlx_loop(data->img->mlx);
+	ft_hook(data);
 }
 
 void	my_new_window(int x, int y, t_data *data, int color)

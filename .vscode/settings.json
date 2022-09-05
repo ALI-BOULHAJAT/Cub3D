@@ -2,6 +2,13 @@
     "files.associations": {
         "libft.h": "c",
         "utils.h": "c",
-        "bitset": "c"
+        "bitset": "c",
+        "array": "c",
+        "iterator": "c",
+        "string": "c",
+        "string_view": "c",
+        "vector": "c",
+        "__node_handle": "c",
+        "cub3d.h": "c"
     }
 }

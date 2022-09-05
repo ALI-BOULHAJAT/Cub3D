@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:18:25 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/03 19:42:08 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/05 11:05:12 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	draw_rectangle(t_data *data, int x, int y, int color)
 	y *= data->texture.zoom;
 	x1 = x + data->texture.zoom;
 	y1 = y + data->texture.zoom;
-	while (x <= x1)
+	while ((double)x <= x1 - 1)
 	{
 		y_n = y;
-		while (y_n <= y1)
+		while (y_n <= y1 - 1)
 		{
 			my_new_window(x, y_n, data, color);
 			y_n++;
@@ -63,22 +63,15 @@ void	draw_player(t_data *data, double x, double y)
 void	while_draw(t_data *data, int *x)
 {
 	int	y;
-	int	color;
 
 	y = 0;
 	while (data->map[*x][y])
 	{
 		if (data->map[*x][y] == '1')
-		{
-			color = 0x555555;
-		}
-		else if (data->map[*x][y] == '0' || data->map[*x][y] == 'N')
-		{
-			color = 0xffffff;
-		}
-		else
-			color = 0;
-		draw_rectangle(data, y, *x, color);
+			draw_rectangle(data, y, *x, 0x555555);
+		else if (data->map[*x][y] == '0' || data->map[*x][y] == 'N' \
+		|| data->map[*x][y] == '2' || data->map[*x][y] == '3')
+			draw_rectangle(data, y, *x, 0xffffff);
 		if (data->map[*x][y] == 'N')
 		{
 			data->player.init_x_player = *x + 0.5;
@@ -96,7 +89,7 @@ void	draw(t_data *data)
 	x = 0;
 	while (data->map[x])
 		while_draw(data, &x);
-	draw_circle(data);
+	draw_vu(data);
 }
 
 void	drow_to_img(t_data *data)
@@ -109,5 +102,6 @@ void	drow_to_img(t_data *data)
 	0, 0);
 }
 
+// draw_circle(data);
 //draw_player(data, (double)data->player.init_y_player,
 //(double)data->player.init_x_player);

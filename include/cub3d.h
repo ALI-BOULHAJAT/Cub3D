@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/03 19:48:05 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/05 10:47:28 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,15 @@
 # include "utils.h"
 # include "macros.h"
 # include <mlx.h>
+# include <math.h>
 
 # define FLOOR  0
 # define CEILLING 0
 # define HIEGHT 1200
 # define LENGHT 1600
+# define STEP 0.05
+# define ALPHA 0.02
+# define RAY 5
 
 /////////////// PARCING ///////////////////////
 
@@ -45,10 +49,13 @@ int		check_circle(char **map, int x, int y);
 
 /////////////  DRAWING ///////////////////////
 
+void	ft_hook(t_data *data);
+int		ft_movekey(t_data *data);
 void	drawing(t_data *data);
 void	drow_to_img(t_data *data);
 void	my_new_window(int x, int y, t_data *data, int color);
 void	draw_circle(t_data *data);
-void	check_key(t_data *data, int key);
+void	check_key(t_data *data);
+void	draw_vu(t_data *data);
 
 #endif

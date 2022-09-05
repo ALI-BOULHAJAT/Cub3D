@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 10:57:52 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/03 15:23:16 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/05 10:39:01 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,22 @@ int	char_in_str(char *str, char c)
 	return (0);
 }
 
+void	check_v_wall(char **map, int x, int y)
+{
+	if (map[x - 1][y] == '1' && map[x][y - 1] == '1' \
+	&& map[x - 1][y - 1] == '0' && map[x][y] == '0')
+	{
+		map[x - 1][y - 1] = '2';
+		map[x][y] = '3';
+	}
+	if (map[x + 1][y] == '1' && map[x][y - 1] == '1' \
+	&& map[x + 1][y - 1] == '0' && map[x][y] == '0')
+	{
+		map[x + 1][y - 1] = '2';
+		map[x][y] = '3';
+	}
+}
+
 void	check_player(t_data **data, char **map, int x, int y)
 {
 	if ((*data)->player.n_player > 1 && !(*data)->error)
@@ -37,14 +53,14 @@ void	check_player(t_data **data, char **map, int x, int y)
 		if (char_in_str(PLAYER, map[x][y]))
 			(*data)->player.n_player++;
 	}
+	check_v_wall(map, x, y);
 }
 
 void	while_closed(t_data **data, char **map, int x, int *y)
 {
 	if (map[x][*y] == '\t')
 		(*data)->error = ft_strdup("error white-space in the map");
-	else if ((*data)->player.n_player > 1 \
-		|| char_in_str(PLAY_EMPT, map[x][*y]))
+	else if (char_in_str(PLAY_EMPT, map[x][*y]))
 		check_player(data, map, x, *y);
 	else if (char_in_str(WALL_SPAC, map[x][*y]))
 		;

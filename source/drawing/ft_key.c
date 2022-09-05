@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 19:45:58 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/03 19:47:16 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/05 10:36:44 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,38 +16,78 @@ int	ft_check_wall(t_data *data, double x_plus, double y_plus)
 {
 	double	x;
 	double	y;
+	double	pre_x;
+	double	pre_y;
 
-	if (x_plus < 0)
-		x_plus += -0.1;
-	if (y_plus < 0)
-		y_plus += -0.1;
 	x = data->player.init_x_player + data->player.player_y + x_plus;
 	y = data->player.init_y_player + data->player.player_x + y_plus;
-	if ((data->map[(int)x][(int)y]) == '1')
+	pre_x = x - x_plus;
+	pre_y = y - y_plus;
+	if ((data->map[(int)pre_x][(int)pre_y]) == '2' \
+	&& (data->map[(int)x][(int)y]) == '3')
+		return (0);
+	if ((data->map[(int)pre_x][(int)pre_y]) == '3' \
+	&& (data->map[(int)x][(int)y]) == '2')
+		return (0);
+	if ((data->map[(int)x][(int)y]) == '1' \
+	|| (data->map[(int)x][(int)y]) == ' ' \
+	|| (data->map[(int)x][(int)y]) == '\n' \
+	|| (data->map[(int)x][(int)y]) == '\0')
 		return (0);
 	return (1);
 }
 
-void	check_key(t_data *data, int key)
+void	movement_key(t_data *data)
 {
-	if (key == 125)
+	double	step_x;
+	double	step_y;
+
+	step_x = STEP * cos(data->player.alpha);
+	step_y = STEP * sin(data->player.alpha);
+	if (data->my_hook.key_s == 1)
 	{
-		if (ft_check_wall(data, 0.1, 0))
-			data->player.player_y += 0.1;
+		if (ft_check_wall(data, -step_y, -step_x))
+		{
+			data->player.player_x = data->player.player_x - step_x;
+			data->player.player_y = data->player.player_y - step_y;
+		}
 	}
-	if (key == 126)
+	if (data->my_hook.key_w == 1)
 	{
-		if (ft_check_wall(data, -0.1, 0))
-			data->player.player_y -= 0.1;
+		if (ft_check_wall(data, step_y, step_x))
+		{
+			data->player.player_x = data->player.player_x + step_x;
+			data->player.player_y = data->player.player_y + step_y;
+		}
 	}
-	if (key == 123)
+	if (data->my_hook.key_east == 1)
+		data->player.alpha += ALPHA;
+	if (data->my_hook.key_west == 1)
+		data->player.alpha -= ALPHA;
+}
+
+void	check_key(t_data *data)
+{
+	double	step_x;
+	double	step_y;
+
+	step_x = STEP * cos(data->player.alpha);
+	step_y = STEP * sin(data->player.alpha);
+	movement_key(data);
+	if (data->my_hook.key_a == 1)
 	{
-		if (ft_check_wall(data, 0, -0.1))
-			data->player.player_x -= 0.1;
+		if (ft_check_wall(data, -step_x, step_y))
+		{
+			data->player.player_x = data->player.player_x + step_y;
+			data->player.player_y = data->player.player_y - step_x;
+		}
 	}
-	if (key == 124)
+	if (data->my_hook.key_d == 1)
 	{
-		if (ft_check_wall(data, 0, 0.1))
-			data->player.player_x += 0.1;
+		if (ft_check_wall(data, step_x, -step_y))
+		{
+			data->player.player_x = data->player.player_x - step_y;
+			data->player.player_y = data->player.player_y + step_x;
+		}
 	}
 }
