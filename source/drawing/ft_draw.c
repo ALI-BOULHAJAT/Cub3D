@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:18:25 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/05 11:05:12 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/05 15:24:25 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	draw(t_data *data)
 		while_draw(data, &x);
 	draw_vu(data);
 }
+// draw_circle(data);
 
 void	drow_to_img(t_data *data)
 {
@@ -102,6 +103,5 @@ void	drow_to_img(t_data *data)
 	0, 0);
 }
 
-// draw_circle(data);
 //draw_player(data, (double)data->player.init_y_player,
 //(double)data->player.init_x_player);

@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 09:52:43 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/05 10:34:31 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/05 15:24:07 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,26 +58,35 @@ void	draw_circle(t_data *data)
 	}
 }
 
+double	ft_diff(double x, double y)
+{
+	return (y - x);
+}
+
 void	draw_vu(t_data *data)
 {
-	double	x;
-	double	y;
+	double	tab_x_y[2];
 	double	x1;
 	double	y1;
-	int		i;
+	double	i;
+	double	step;
 
-	x = ((data->player.init_y_player * data->texture.zoom \
-	+ data->player.player_x * data->texture.zoom));
-	y = data->player.init_x_player * data->texture.zoom \
-	+ data->player.player_y * data->texture.zoom;
-	x1 = x + (data->texture.zoom / 2);
-	y1 = y + (data->texture.zoom / 2);
-	i = 5;
-	while (i)
+	i = 0;
+	tab_x_y[0] = data->player.init_y_player + data->player.player_x;
+	tab_x_y[1] = data->player.init_x_player + data->player.player_y;
+	tab_x_y[0] *= data->texture.zoom;
+	tab_x_y[1] *= data->texture.zoom;
+	x1 = tab_x_y[0] + (cos(data->player.alpha) * data->texture.zoom);
+	y1 = tab_x_y[1] + (sin(data->player.alpha) * data->texture.zoom);
+	if (fabs(ft_diff(tab_x_y[0], x1)) > fabs(ft_diff(tab_x_y[1], y1)))
+		step = fabs(ft_diff(tab_x_y[0], x1));
+	else
+		step = fabs(ft_diff(tab_x_y[1], y1));
+	while (i <= step)
 	{
-		my_new_window(x, y, data, 0);
-		x = x + ((data->texture.zoom / 2) * cos(data->player.alpha));
-		y = y + ((data->texture.zoom / 2) * sin(data->player.alpha));
-		i--;
+		my_new_window(tab_x_y[0], tab_x_y[1], data, 0xff0000);
+		tab_x_y[0] += ft_diff(tab_x_y[0], x1) / step;
+		tab_x_y[1] += ft_diff(tab_x_y[1], y1) / step;
+		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 10:57:52 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/05 10:39:01 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/05 15:25:17 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,21 @@ int	char_in_str(char *str, char c)
 
 void	check_v_wall(char **map, int x, int y)
 {
-	if (map[x - 1][y] == '1' && map[x][y - 1] == '1' \
-	&& map[x - 1][y - 1] == '0' && map[x][y] == '0')
+	if (map[x - 1][y] == '1' && map[x][y - 1] == '1')
 	{
-		map[x - 1][y - 1] = '2';
-		map[x][y] = '3';
+		if (map[x][y] == '0')
+			map[x][y] = '2';
+		if (map[x - 1][y - 1] == '0' && map[x][y] == '2')
+			map[x - 1][y - 1] = '3';
+		if (map[x - 1][y - 1] == '0' && map[x][y] == '3')
+			map[x - 1][y - 1] = '2';
 	}
-	if (map[x + 1][y] == '1' && map[x][y - 1] == '1' \
-	&& map[x + 1][y - 1] == '0' && map[x][y] == '0')
+	if (map[x + 1][y] == '1' && map[x][y - 1] == '1')
 	{
-		map[x + 1][y - 1] = '2';
-		map[x][y] = '3';
+		if (map[x + 1][y - 1] == '0')
+			map[x + 1][y - 1] = '3';
+		if (map[x][y] == '0')
+			map[x][y] = '2';
 	}
 }
 

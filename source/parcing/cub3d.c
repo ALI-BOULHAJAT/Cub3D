@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:46:36 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/05 10:31:24 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/05 15:25:30 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ int	main(int ac, char **av)
 		drawing(&data);
 	return (0);
 }
-		// system("leaks cub3d");
 		// print_data(data);
+		// system("leaks cub3d");
 		// printf("\ndone\n");

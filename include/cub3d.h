@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/05 10:47:28 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/05 15:26:02 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@
 # define STEP 0.05
 # define ALPHA 0.02
 # define RAY 5
+# define FOV_ANGLE 60
 
+// FOV_ANGLE 60 * M_PI / 180
 /////////////// PARCING ///////////////////////
 
 void	read_map(t_data *data, char **av);
