@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 10:57:52 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/05 15:25:17 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/05 17:33:34 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ void	check_player(t_data **data, char **map, int x, int y)
 		if (check_circle(map, x, y) && !(*data)->error)
 			(*data)->error = ft_strdup("error : map no closed");
 		if (char_in_str(PLAYER, map[x][y]))
+		{
+			(*data)->player .face = map[x][y];
 			(*data)->player.n_player++;
+		}
 	}
 	check_v_wall(map, x, y);
 }
@@ -88,6 +91,7 @@ void	close_map(t_data **data)
 			while_closed(data, map, x, &y);
 		x++;
 	}
+	init_face(*data);
 	if ((*data)->player.n_player == 0 && !(*data)->error)
 		(*data)->error = ft_strdup("error : no player");
 }

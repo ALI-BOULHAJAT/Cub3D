@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:58:17 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/05 10:30:42 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/06 18:57:04 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_player
 	int		to_east;
 	int		to_west;
 	double	alpha;
+	char	face;
 }	t_player;
 
 typedef struct s_texture
@@ -65,6 +66,18 @@ typedef struct s_texture
 	t_color	ceilling;
 
 }	t_texture;
+
+typedef struct s_ray
+{
+	int		ray_face_up;
+	int		ray_face_down;
+	int		ray_face_left;
+	int		ray_face_right;
+	double	first_x_intersection[2];
+	double	x_intersection_step[2];
+	double	first_y_intersection[2];
+	double	y_intersection_step[2];
+}	t_ray;
 
 typedef struct s_hook
 {
@@ -86,6 +99,7 @@ typedef struct s_data
 	char		**map;
 	char		*error;
 	t_hook		my_hook;
+	t_ray		ray;
 
 }	t_data;
 

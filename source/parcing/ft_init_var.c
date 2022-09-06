@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:51:32 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/05 10:57:55 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/05 16:28:34 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,18 @@ void	init_color(t_color *color)
 	(*color).r = -1;
 	(*color).g = -1;
 	(*color).b = -1;
+}
+
+void	init_face(t_data *data)
+{
+	if (data->player.face == 'E')
+		data->player.alpha = 0;
+	else if (data->player.face == 'W')
+		data->player.alpha = 3.14;
+	else if (data->player.face == 'S')
+		data->player.alpha = 1.57;
+	else if (data->player.face == 'N')
+		data->player.alpha = 4.71;
 }
 
 void	int_key(t_data *data)
@@ -53,7 +65,6 @@ void	init_struct(t_data **data)
 	(*data)->player.to_west = 1;
 	init_color(&((*data)->texture.floor));
 	init_color(&((*data)->texture.ceilling));
-	(*data)->player.alpha = 1;
 	int_key(*data);
 }
 // (*data)->my_hook.key_south = 0;

@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/05 15:26:02 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/06 16:27:39 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define HIEGHT 1200
 # define LENGHT 1600
 # define STEP 0.05
-# define ALPHA 0.02
+# define ALPHA 0.1
 # define RAY 5
 # define FOV_ANGLE 60
 
@@ -48,6 +48,8 @@ void	init_struct(t_data **data);
 int		empty_line(char *line);
 void	close_map(t_data **data);
 int		check_circle(char **map, int x, int y);
+void	init_face(t_data *data);
+int		char_in_str(char *str, char c);
 
 /////////////  DRAWING ///////////////////////
 
@@ -59,5 +61,6 @@ void	my_new_window(int x, int y, t_data *data, int color);
 void	draw_circle(t_data *data);
 void	check_key(t_data *data);
 void	draw_vu(t_data *data);
+void    first_x_intersection(t_data *data);
 
 #endif
