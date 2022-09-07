@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/06 16:27:39 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/07 19:43:35 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define CEILLING 0
 # define HIEGHT 1200
 # define LENGHT 1600
-# define STEP 0.05
+# define STEP 0.2
 # define ALPHA 0.1
 # define RAY 5
 # define FOV_ANGLE 60
@@ -60,7 +60,13 @@ void	drow_to_img(t_data *data);
 void	my_new_window(int x, int y, t_data *data, int color);
 void	draw_circle(t_data *data);
 void	check_key(t_data *data);
-void	draw_vu(t_data *data);
-void    first_x_intersection(t_data *data);
+void	draw_FOV(t_data *data);
+void    horizontal_intersection(t_data *data);
+void    vertical_intersection(t_data *data);
+void	draw_line(t_data *data, double int_x, double last_x, double int_y, double last_y, int color);
+double  distance_2_point(double x, double x1, double y, double y1);
+void    get_distance(t_data *data);
+double	normalizeangle(double angle);
+void	facing_ray(t_data *data);
 
 #endif

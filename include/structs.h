@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:58:17 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/06 18:57:04 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:17:31 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,20 @@
 # define STRUCTS_H
 
 # include "cub3d.h"
+
+typedef	struct s_index
+{
+	double	x;
+	double	y;
+}	t_index;
+
+typedef struct s_face
+{
+	int	up;
+	int	down;
+	int	left;
+	int	right;
+}	t_face;
 
 typedef struct s_color
 {
@@ -69,10 +83,14 @@ typedef struct s_texture
 
 typedef struct s_ray
 {
-	int		ray_face_up;
-	int		ray_face_down;
-	int		ray_face_left;
-	int		ray_face_right;
+	t_face	ray_face;
+	int		found_h_wall;
+	int		found_v_wall;
+	int		v_is_best;
+	int		h_is_best;
+	t_index	vertical_touch;
+	t_index	horizontal_touch;
+	double	angle_ray;
 	double	first_x_intersection[2];
 	double	x_intersection_step[2];
 	double	first_y_intersection[2];
@@ -102,5 +120,6 @@ typedef struct s_data
 	t_ray		ray;
 
 }	t_data;
+
 
 #endif

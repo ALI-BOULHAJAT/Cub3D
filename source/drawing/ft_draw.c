@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:18:25 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/06 18:43:14 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/07 20:23:27 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,27 @@ void	while_draw(t_data *data, int *x)
 void	draw(t_data *data)
 {
 	int	x;
+	double  player_x;
+    double  player_y;
+    
+    data->ray.v_is_best = 0;
+    data->ray.h_is_best = 0;
+    player_x = data->player.init_y_player + data->player.player_x;
+    player_y = data->player.init_x_player + data->player.player_y;
+    player_x *= data->texture.zoom;
+    player_y *= data->texture.zoom;
 	// double *tab;
 
 	x = 0;
 	while (data->map[x])
 		while_draw(data, &x);
-	draw_vu(data);
-	first_x_intersection(data);
+	// if (data->ray.h_is_best)
+	// 	draw_line(data, player_x, data->ray.horizontal_touch.x, player_y, data->ray.horizontal_touch.y);
+	// else
+	// 	draw_line(data, player_x, data->ray.vertical_touch.x, player_y, data->ray.vertical_touch.y);
+	// draw_line(data, player_x, (player_x + cos(data->player.alpha) * data->texture.zoom), player_y , player_y + sin(data->player.alpha)  * data->texture.zoom, 0xff0000);
+	draw_FOV(data);
+		
 }
 	// draw_circle(data);
 
@@ -105,9 +119,9 @@ void	drow_to_img(t_data *data)
 	data->img->addr = mlx_get_data_addr(data->img->img, &data->img->bit_img, \
 	&data->img->d_size, &data->img->endian);
 	draw(data);
-	printf("%f\n", data->player.alpha);
-	printf("x-> %f y->%f\n", data->player.init_y_player + data->player.player_x, data->player.init_x_player + data->player.player_y);
-	printf("first x-> %f y-> %f\n", data->ray.first_x_intersection[0] / data->texture.zoom, data->ray.first_x_intersection[1] / data->texture.zoom);
+	// printf("%f\n", data->player.alpha);
+	// printf("x-> %f y->%f\n", data->player.init_y_player + data->player.player_x, data->player.init_x_player + data->player.player_y);
+	// printf("first x-> %f y-> %f\n", data->ray.first_x_intersection[0] / data->texture.zoom, data->ray.first_x_intersection[1] / data->texture.zoom);
 	mlx_put_image_to_window(data->img->mlx, data->img->win, data->img->img, \
 	0, 0);
 }

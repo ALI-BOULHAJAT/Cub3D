@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 09:52:43 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/06 15:06:30 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/07 20:25:59 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,50 +116,56 @@ int	ray_check_wall(t_data *data, double cpy_x_y[2], double tab_x1_y1[2], double 
 		return (0);
 }
 
-void	draw_vu(t_data *data)
+void	draw_FOV(t_data *data)
 {
-	double	tab_x_y[2];
-	double	tab_x1_y1[2];
-	// double	x1;
-	// double	y1;
-	double	i;
-	// int	y = 0;
-	double	step;
-	double	rayangle;
-	double	last_angle;
-	double	cpy_x_y[2];
-	// int		check = 320;
+	t_index	player;
+	t_index	ray;
+	// double	last_angle;
+	int	index = LENGHT;
 
-	tab_x_y[0] = data->player.init_y_player + data->player.player_x;
-	tab_x_y[1] = data->player.init_x_player + data->player.player_y;
-	tab_x_y[0] *= data->texture.zoom;
-	tab_x_y[1] *= data->texture.zoom;
-	rayangle = data->player.alpha - (30 * M_PI / 180);
-	last_angle = data->player.alpha + (30 * M_PI / 180);
-	while(rayangle <= last_angle)
+	player.x = (data->player.init_y_player + data->player.player_x) * data->texture.zoom;
+	player.y = (data->player.init_x_player + data->player.player_y) * data->texture.zoom;
+	data->ray.angle_ray = data->player.alpha - (30 * (M_PI / 180));
+	while(index)
 	{
-		cpy_x_y[0] = tab_x_y[0];
-		cpy_x_y[1] = tab_x_y[1];
-		tab_x1_y1[0] = cpy_x_y[0] + (cos(rayangle) * data->texture.zoom);
-		tab_x1_y1[1] = cpy_x_y[1] + (sin(rayangle) * data->texture.zoom);
-		if (fabs(ft_diff(cpy_x_y[0], tab_x1_y1[0])) > fabs(ft_diff(cpy_x_y[1], tab_x1_y1[1])))
-			step = fabs(ft_diff(cpy_x_y[0], tab_x1_y1[0]));
-		else
-			step = fabs(ft_diff(cpy_x_y[1], tab_x1_y1[1]));
-		i = 0;
-		while (i <= step)
+		facing_ray(data);
+		data->ray.angle_ray = normalizeangle(data->ray.angle_ray);
+		horizontal_intersection(data);
+		vertical_intersection(data);
+		get_distance(data);
+		if (data->ray.h_is_best == 1)
 		{
-			if (ray_check_wall(data, cpy_x_y, tab_x1_y1, step))
-				break ;
-			my_new_window(cpy_x_y[0], cpy_x_y[1], data, 0x977950);
-			cpy_x_y[0] += ft_diff(cpy_x_y[0], tab_x1_y1[0]) / step;
-			cpy_x_y[1] += ft_diff(cpy_x_y[1], tab_x1_y1[1]) / step;
-			i += 0.01;
+			ray.x = data->ray.horizontal_touch.x;
+			ray.y = data->ray.horizontal_touch.y;
 		}
-		rayangle += (60 * M_PI / 180)/320;
-		// y++;
-		// printf("here\n");
-		// check--;
+		else
+		{
+			ray.x = data->ray.vertical_touch.x;
+			ray.y = data->ray.vertical_touch.y;
+		}
+		draw_line(data, player.x, ray.x, player.y, ray.y, 0x977950);
+		data->ray.angle_ray += (60 * (M_PI / 180))/LENGHT;
+		index--;
 	}
-	// printf("%d\n", y);
+}
+
+void	draw_line(t_data *data, double int_x, double last_x, double int_y, double last_y, int color)
+{
+	double	i;
+	double	step;
+
+	i = 0;
+	if (fabs(ft_diff(int_x, last_x)) > fabs(ft_diff(int_y, last_y)))
+		step = fabs(ft_diff(int_x, last_x));
+	else
+		step = fabs(ft_diff(int_y, last_y));
+	while (i <= step)
+	{
+		if (data->map[abs((int)int_y/data->texture.zoom)][abs((int)int_x/data->texture.zoom)] == '1')
+			break ;
+		my_new_window(int_x, int_y, data, color);
+		int_x += ft_diff(int_x, last_x) / step;
+		int_y += ft_diff(int_y, last_y) / step;
+		i += 0.1;
+	}
 }

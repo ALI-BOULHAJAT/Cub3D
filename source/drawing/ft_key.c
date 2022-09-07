@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 19:45:58 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/06 19:24:25 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/07 20:20:27 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,34 @@ int	ft_check_wall(t_data *data, double x_plus, double y_plus)
 
 void	facing_ray(t_data *data)
 {
-	if (data->player.alpha > 0 && data->player.alpha < M_PI)
+	if (data->ray.angle_ray > 0 && data->ray.angle_ray < M_PI)
 	{
-		data->ray.ray_face_down = 1;
-		data->ray.ray_face_up = 0;
+		data->ray.ray_face.down = 1;
+		data->ray.ray_face.up = 0;
 	}
 	else
 	{
-		data->ray.ray_face_down = 0;
-		data->ray.ray_face_up = 1;
+		data->ray.ray_face.down = 0;
+		data->ray.ray_face.up = 1;
 	}
-	if(data->player.alpha < (0.5 * M_PI) || data->player.alpha > (1.5 * M_PI))
+	if(data->ray.angle_ray < (0.5 * M_PI) || data->ray.angle_ray > (1.5 * M_PI))
 	{
-		data->ray.ray_face_right = 1;
-		data->ray.ray_face_left = 0;
+		data->ray.ray_face.right = 1;
+		data->ray.ray_face.left = 0;
 	}
 	else
 	{
-		data->ray.ray_face_right = 0;
-		data->ray.ray_face_left = 1;
+		data->ray.ray_face.right = 0;
+		data->ray.ray_face.left = 1;
 	}
+}
+
+double	normalizeangle(double	angle)
+{
+	angle = fmod(angle, (2 * M_PI));
+	if (angle < 0)
+		angle = angle + (2 * M_PI);
+	return (angle);
 }
 
 void	movement_key(t_data *data)
@@ -89,16 +97,16 @@ void	movement_key(t_data *data)
 		data->player.alpha += ALPHA;
 		data->player.alpha = fmod(data->player.alpha, (2 * M_PI));
 		if (data->player.alpha < 0)
-			data->player.alpha += (2 * M_PI);
-		facing_ray(data);
+			data->player.alpha = data->player.alpha + (2 * M_PI);
+		// facing_ray(data);
 	}
 	if (data->my_hook.key_west == 1)
 	{
 		data->player.alpha -= ALPHA;
 		data->player.alpha = fmod(data->player.alpha, (2 * M_PI));
 		if (data->player.alpha < 0)
-			data->player.alpha += (2 * M_PI);
-		facing_ray(data);
+			data->player.alpha =  data->player.alpha + (2 * M_PI);
+		// facing_ray(data);
 	}
 }
 
