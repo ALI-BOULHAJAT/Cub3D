@@ -6,125 +6,116 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 15:04:42 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/07 19:31:02 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/08 19:06:38 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void   horizontal_intersection(t_data *data)
+void	while_horizontal(t_data *data, t_index inter, t_index step)
 {
-    t_index player;
-    t_index horizontal_intersection;
-    t_index step;
-    double  test;
-    
-    data->ray.found_h_wall = 0;
-    player.x = (data->player.init_y_player + data->player.player_x) * data->texture.zoom;
-    player.y = (data->player.init_x_player + data->player.player_y) * data->texture.zoom;
+	double		tmp;
+	double		zoom;
 
-    /////// find y cordinate of horizantal
-    horizontal_intersection.y = data->texture.zoom * ((int)(player.y / data->texture.zoom));
-    if (data->ray.ray_face.down)
-        horizontal_intersection.y += data->texture.zoom;
-    /////// find x cordinate of horizantal
-    horizontal_intersection.x = player.x + ((horizontal_intersection.y - player.y) / tan(data->ray.angle_ray));
-    step.y = data->texture.zoom;
-    if (data->ray.ray_face.up)
-        step.y *= -1;
-    step.x = data->texture.zoom / tan(data->ray.angle_ray);
-    if (data->ray.ray_face.left && step.x > 0)
-        step.x *= -1;
-    if (data->ray.ray_face.right && step.x < 0)
-        step.x *= -1;
-    while(horizontal_intersection.y > 0 && (horizontal_intersection.y / data->texture.zoom) <= 15 && horizontal_intersection.x > 0 && (horizontal_intersection.x / data->texture.zoom) <= 35)
-    {
-        test = horizontal_intersection.y;
-        if (data->ray.ray_face.up)
-            test--;
-        if (data->map[(int)(test / data->texture.zoom)][(int)(horizontal_intersection.x / data->texture.zoom)] == '1')
-        {
-            data->ray.found_h_wall = 1;
-            data->ray.horizontal_touch.x = horizontal_intersection.x;
-            data->ray.horizontal_touch.y = horizontal_intersection.y;
-            break ;
-        }
-        else
-        {
-            horizontal_intersection.x += step.x;
-            horizontal_intersection.y += step.y;
-        }
-    }
+	zoom = data->texture.zoom;
+	while (inter.y > 0 && (inter.y / zoom) < data->texture.map_size.x \
+	&& inter.x > 0 && (inter.x / zoom) < data->texture.map_size.y)
+	{
+		tmp = inter.y;
+		if (data->ray.ray_face.up)
+			tmp--;
+		if (char_in_str(LIMIT, \
+		data->map[(int)(tmp / zoom)][(int)(inter.x / zoom)]))
+		{
+			data->ray.found_h_wall = 1;
+			data->ray.horizontal_touch.x = inter.x;
+			data->ray.horizontal_touch.y = inter.y;
+			break ;
+		}
+		else
+		{
+			inter.x += step.x;
+			inter.y += step.y;
+		}
+	}
 }
 
-void    vertical_intersection(t_data *data)
+void	while_vertical(t_data *data, t_index inter, t_index step)
 {
-    t_index player;
-    t_index step;
-    t_index vertical_intersection;
-    double  test;
+	double		tmp;
+	double		zoom;
 
-    data->ray.found_v_wall = 0;
-    player.x = (data->player.init_y_player + data->player.player_x) * data->texture.zoom;
-    player.y = (data->player.init_x_player + data->player.player_y) * data->texture.zoom;
-    vertical_intersection.x = data->texture.zoom * ((int)(player.x / data->texture.zoom));
-    if (data->ray.ray_face.right)
-        vertical_intersection.x += data->texture.zoom;
-    vertical_intersection.y = player.y + ((vertical_intersection.x - player.x) * tan(data->ray.angle_ray));
-    step.x = data->texture.zoom;
-    if (data->ray.ray_face.left)
-        step.x *= -1;
-    step.y = data->texture.zoom * tan(data->ray.angle_ray);
-    if (data->ray.ray_face.up && step.y > 0)
-        step.y *= -1;
-    if (data->ray.ray_face.down && step.y < 0)
-        step.y *= -1;
-    while(vertical_intersection.y > 0 && (vertical_intersection.y / data->texture.zoom) <= 15 \
-    && vertical_intersection.x > 0 && (vertical_intersection.x / data->texture.zoom) <= 35)
-    {
-        test = vertical_intersection.x;
-        if (data->ray.ray_face.left)
-            test--;
-        if (data->map[(int)(vertical_intersection.y / data->texture.zoom)][(int)(test / data->texture.zoom)] == '1')
-        {
-            data->ray.found_v_wall = 1;
-            data->ray.vertical_touch.x = vertical_intersection.x;
-            data->ray.vertical_touch.y = vertical_intersection.y;
-            break ;
-        }
-        else
-        {
-            vertical_intersection.x += step.x;
-            vertical_intersection.y += step.y;
-        }
-    }
+	zoom = data->texture.zoom;
+	while (inter.y > 0 && (inter.y / zoom) < data->texture.map_size.x \
+	&& inter.x > 0 && (inter.x / zoom) < data->texture.map_size.y)
+	{
+		tmp = inter.x;
+		if (data->ray.ray_face.left)
+			tmp--;
+		if (char_in_str(LIMIT, \
+		data->map[(int)(inter.y / zoom)][(int)(tmp / zoom)]))
+		{
+			data->ray.found_v_wall = 1;
+			data->ray.vertical_touch.x = inter.x;
+			data->ray.vertical_touch.y = inter.y;
+			break ;
+		}
+		else
+		{
+			inter.x += step.x;
+			inter.y += step.y;
+		}
+	}
 }
 
-double  distance_2_point(double x, double x1, double y, double y1)
+void	horizontal_intersection(t_data *data)
 {
-    return (sqrt(((x1 - x) * (x1 - x)) + ((y1 - y) * (y1 - y))));
+	t_index	player;
+	t_index	h_inter;
+	t_index	step;
+
+	data->ray.found_h_wall = 0;
+	player = player_possition(data);
+	h_inter.y = data->texture.zoom * ((int)(player.y / data->texture.zoom));
+	if (data->ray.ray_face.down)
+		h_inter.y += data->texture.zoom;
+	h_inter.x = player.x + ((h_inter.y - player.y) / tan(data->ray.angle_ray));
+	step.y = data->texture.zoom;
+	if (data->ray.ray_face.up)
+		step.y *= -1;
+	step.x = data->texture.zoom / tan(data->ray.angle_ray);
+	if (data->ray.ray_face.left && step.x > 0)
+		step.x *= -1;
+	if (data->ray.ray_face.right && step.x < 0)
+		step.x *= -1;
+	while_horizontal(data, h_inter, step);
 }
 
-void    get_distance(t_data *data)
+void	vertical_intersection(t_data *data)
 {
-    double  h_distance = 0;
-    double  v_distance = 0;
-    t_index player;
+	t_index	player;
+	t_index	step;
+	t_index	v_inter;
 
-    player.x = (data->player.init_y_player + data->player.player_x) * data->texture.zoom;
-    player.y = (data->player.init_x_player + data->player.player_y) * data->texture.zoom;
-    if (data->ray.found_h_wall)
-        h_distance = distance_2_point(player.x, data->ray.horizontal_touch.x, player.y, data->ray.horizontal_touch.y);
-    if (data->ray.found_v_wall)
-        v_distance = distance_2_point(player.x, data->ray.vertical_touch.x, player.y, data->ray.vertical_touch.y);
-    if (h_distance < v_distance)
-    {
-        data->ray.h_is_best = 1;
-        data->ray.v_is_best = 0;
-    }
-    else
-    {
-        data->ray.v_is_best = 1;
-        data->ray.h_is_best = 0;
-    }
+	data->ray.found_v_wall = 0;
+	player = player_possition(data);
+	v_inter.x = data->texture.zoom * ((int)(player.x / data->texture.zoom));
+	if (data->ray.ray_face.right)
+		v_inter.x += data->texture.zoom;
+	v_inter.y = player.y + ((v_inter.x - player.x) * tan(data->ray.angle_ray));
+	step.x = data->texture.zoom;
+	if (data->ray.ray_face.left)
+		step.x *= -1;
+	step.y = data->texture.zoom * tan(data->ray.angle_ray);
+	if (data->ray.ray_face.up && step.y > 0)
+		step.y *= -1;
+	if (data->ray.ray_face.down && step.y < 0)
+		step.y *= -1;
+	while_vertical(data, v_inter, step);
+}
+
+double	distance_2_point(t_index first, t_index last)
+{
+	return (sqrt(((last.x - first.x) * (last.x - first.x)) \
+	+ ((last.y - first.y) * (last.y - first.y))));
 }

@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 15:51:20 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/08/31 16:23:03 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/08 12:59:09 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_north(char **map, int x, int y)
 {
-	if (x - 1 >= 0)
+	if ((x - 1) >= 0)
 	{
 		if (map[x - 1][y] && (map[x - 1][y] != ' '))
 			return (1);
@@ -26,13 +26,12 @@ int	check_south(char **map, int x, int y)
 {
 	if (map[x + 1] && map[x + 1][y] && (map[x + 1][y] != ' '))
 		return (1);
-	else
-		return (0);
+	return (0);
 }
 
 int	check_west(char **map, int x, int y)
 {
-	if (y - 1 >= 0)
+	if ((y - 1) >= 0)
 	{
 		if (map[x][y - 1] && map[x][y - 1] != ' ')
 			return (1);

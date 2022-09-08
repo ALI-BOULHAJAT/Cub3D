@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 10:57:52 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/05 17:33:34 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/08 12:59:30 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,72 +26,74 @@ int	char_in_str(char *str, char c)
 	return (0);
 }
 
-void	check_v_wall(char **map, int x, int y)
+void	check_v_wall(t_data *data, char **map, int x, int y)
 {
-	if (map[x - 1][y] == '1' && map[x][y - 1] == '1')
+	if (!data->error)
 	{
-		if (map[x][y] == '0')
-			map[x][y] = '2';
-		if (map[x - 1][y - 1] == '0' && map[x][y] == '2')
-			map[x - 1][y - 1] = '3';
-		if (map[x - 1][y - 1] == '0' && map[x][y] == '3')
-			map[x - 1][y - 1] = '2';
-	}
-	if (map[x + 1][y] == '1' && map[x][y - 1] == '1')
-	{
-		if (map[x + 1][y - 1] == '0')
-			map[x + 1][y - 1] = '3';
-		if (map[x][y] == '0')
-			map[x][y] = '2';
-	}
-}
-
-void	check_player(t_data **data, char **map, int x, int y)
-{
-	if ((*data)->player.n_player > 1 && !(*data)->error)
-		(*data)->error = ft_strdup("error : multiple players");
-	else if (char_in_str(PLAY_EMPT, map[x][y]))
-	{
-		if (check_circle(map, x, y) && !(*data)->error)
-			(*data)->error = ft_strdup("error : map no closed");
-		if (char_in_str(PLAYER, map[x][y]))
+		if (map[x - 1][y] == '1' && map[x][y - 1] == '1')
 		{
-			(*data)->player .face = map[x][y];
-			(*data)->player.n_player++;
+			if (map[x][y] == '0')
+				map[x][y] = '2';
+			if (map[x - 1][y - 1] == '0' && map[x][y] == '2')
+				map[x - 1][y - 1] = '3';
+			if (map[x - 1][y - 1] == '0' && map[x][y] == '3')
+				map[x - 1][y - 1] = '2';
+		}
+		if (map[x + 1][y] == '1' && map[x][y - 1] == '1')
+		{
+			if (map[x + 1][y - 1] == '0')
+				map[x + 1][y - 1] = '3';
+			if (map[x][y] == '0')
+				map[x][y] = '2';
 		}
 	}
-	check_v_wall(map, x, y);
 }
 
-void	while_closed(t_data **data, char **map, int x, int *y)
+void	check_player(t_data *data, char **map, int x, int y)
 {
-	if (map[x][*y] == '\t')
-		(*data)->error = ft_strdup("error white-space in the map");
+	if (data->player.n_player > 1 && !data->error)
+		data->error = ft_strdup("error : multiple players");
+	else if (char_in_str(PLAY_EMPT, map[x][y]))
+	{
+		if (check_circle(map, x, y))
+			data->error = ft_strdup("error : map no closed");
+		if (char_in_str(PLAYER, map[x][y]))
+		{
+			data->player .face = map[x][y];
+			data->player.n_player++;
+		}
+	}
+	check_v_wall(data, map, x, y);
+}
+
+void	while_closed(t_data *data, char **map, int x, int *y)
+{
+	if (char_in_str(WHITE_SPACE, map[x][*y]))
+		data->error = ft_strdup("error white-space in the map");
 	else if (char_in_str(PLAY_EMPT, map[x][*y]))
 		check_player(data, map, x, *y);
 	else if (char_in_str(WALL_SPAC, map[x][*y]))
 		;
-	else if (!(*data)->error)
-		(*data)->error = ft_strdup("invalid caracter in map");
+	else if (!data->error)
+		data->error = ft_strdup("invalid caracter in map");
 	(*y)++;
 }
 
-void	close_map(t_data **data)
+void	close_map(t_data *data)
 {
-	int		x;
-	int		y;
-	char	**map;
+	t_index_int	index;
+	char		**map;
 
-	map = (*data)->map;
-	x = 0;
-	while (!(*data)->error && map[x])
+	map = data->map;
+	index.x = 0;
+	while (!data->error && map[index.x])
 	{
-		y = 0;
-		while (map[x][y] && !(*data)->error)
-			while_closed(data, map, x, &y);
-		x++;
+		index.y = 0;
+		while (map[index.x][index.y] && !data->error)
+			while_closed(data, map, index.x, &index.y);
+		index.x++;
 	}
-	init_face(*data);
-	if ((*data)->player.n_player == 0 && !(*data)->error)
-		(*data)->error = ft_strdup("error : no player");
+	init_face(data);
+	if (data->player.n_player == 0 && !data->error)
+		data->error = ft_strdup("error : no player");
 }

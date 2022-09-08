@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:42:34 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/05 11:07:10 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/08 19:11:28 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,15 @@ int	ft_close_x(t_data *data)
 
 int	ft_zoom(int mouse, int x, int y, t_data *data)
 {
-	x = 0;
-	y = 0;
+	(void)x;
+	(void)y;
 	if (mouse == 5)
 		data->texture.zoom += 1;
 	if (mouse == 4)
-		data->texture.zoom -= 1;
+	{
+		if (data->texture.zoom > 1)
+			data->texture.zoom -= 1;
+	}
 	mlx_clear_window(data->img->mlx, data->img->win);
 	mlx_destroy_image(data->img->mlx, data->img->img);
 	drow_to_img(data);

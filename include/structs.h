@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:58:17 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/07 18:17:31 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/08 19:08:48 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 
 # include "cub3d.h"
 
-typedef	struct s_index
+typedef struct s_index
 {
 	double	x;
 	double	y;
 }	t_index;
+
+typedef struct s_index_int
+{
+	int	x;
+	int	y;
+}	t_index_int;
 
 typedef struct s_face
 {
@@ -67,17 +73,17 @@ typedef struct s_player
 
 typedef struct s_texture
 {
-	char	*north;
-	char	*south;
-	char	*east;
-	char	*west;
-	int		check;
-	int		map_size;
-	int		is_empty_line;
-	int		read_in_map;
-	int		zoom;
-	t_color	floor;
-	t_color	ceilling;
+	char		*north;
+	char		*south;
+	char		*east;
+	char		*west;
+	int			check;
+	t_index_int	map_size;
+	int			is_empty_line;
+	int			read_in_map;
+	int			zoom;
+	t_color		floor;
+	t_color		ceilling;
 
 }	t_texture;
 
@@ -120,6 +126,5 @@ typedef struct s_data
 	t_ray		ray;
 
 }	t_data;
-
 
 #endif

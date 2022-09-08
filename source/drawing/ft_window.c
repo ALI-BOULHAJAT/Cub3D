@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 11:19:13 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/06 16:30:14 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/08 19:05:11 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ void	drawing(t_data *data)
 {
 	(void)data;
 	data->img->mlx = mlx_init();
-	data->img->win = mlx_new_window(data->img->mlx, LENGHT, HIEGHT, "Cub3D");
+	data->img->win = mlx_new_window(data->img->mlx, HIEGHT, WEIGHT, "Cub3D");
 	drow_to_img(data);
 	ft_hook(data);
 }
 
-void	my_new_window(int x, int y, t_data *data, int color)
+void	ft_put_pixel(int x, int y, t_data *data, int color)
 {
 	char	*adr;
 
-	if ((x > 0 && x < LENGHT) && (y > 0 && y < HIEGHT))
+	if ((x > 0 && x < HIEGHT) && (y > 0 && y < WEIGHT))
 	{
 		adr = data->img->addr + (y * data->img->d_size) \
 		+ (x * (data->img->bit_img / 8));

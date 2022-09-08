@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 19:32:01 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/05 10:56:04 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/08 11:44:35 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,37 @@ void	ft_free_tab(char **tab)
 	free(tab);
 }
 
-void	map_size(t_data **data, char *file)
+int	count_col(char *line)
 {
-	int		fd;
-	char	*line;
-	int		count_line;
+	int	i;
 
-	count_line = 0;
+	i = 0;
+	while (line[i])
+		i++;
+	return (i);
+}
+
+void	ft_check_map_size(t_data *data, t_index_int count)
+{
+	if (count.x == 0)
+		data->error = ft_strdup("Empty file");
+	else if (count.x < 6)
+		data->error = ft_strdup("No map");
+	else
+	{
+		data->texture.map_size.x = count.x - 6;
+		data->texture.map_size.y = count.y;
+	}
+}
+
+void	map_size(t_data *data, char *file)
+{
+	int			fd;
+	char		*line;
+	t_index_int	count;
+
+	count.x = 0;
+	count.y = 0;
 	fd = open(file, O_RDONLY);
 	if (fd > 0)
 	{
@@ -52,15 +76,14 @@ void	map_size(t_data **data, char *file)
 			if (!line)
 				break ;
 			if (!empty_line(line))
-				count_line++;
+			{
+				count.x++;
+				if (count.y < count_col(line))
+					count.y = count_col(line);
+			}
 			free(line);
 		}
-		if (count_line == 0)
-			(*data)->error = ft_strdup("Empty file");
-		else if (count_line < 6)
-			(*data)->error = ft_strdup("No map");
-		else
-			(*data)->texture.map_size = count_line - 6;
+		ft_check_map_size(data, count);
 	}
 	close (fd);
 }

@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 19:45:58 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/07 20:20:27 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/08 16:07:28 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,30 @@
 
 int	ft_check_wall(t_data *data, double x_plus, double y_plus)
 {
-	double	x;
-	double	y;
-	double	pre_x;
-	double	pre_y;
+	t_index	player;
+	t_index	pre_point;
 
-	x = data->player.init_x_player + data->player.player_y + x_plus;
-	y = data->player.init_y_player + data->player.player_x + y_plus;
-	pre_x = x - x_plus;
-	pre_y = y - y_plus;
-	if ((data->map[(int)pre_x][(int)pre_y]) == '2' \
-	&& (data->map[(int)x][(int)y]) == '3')
+	player.x = data->player.init_x_player + data->player.player_y + x_plus;
+	player.y = data->player.init_y_player + data->player.player_x + y_plus;
+	pre_point.x = player.x - x_plus;
+	pre_point.y = player.y - y_plus;
+	if ((data->map[(int)pre_point.x][(int)pre_point.y]) == '2' \
+	&& (data->map[(int)player.x][(int)player.y]) == '3')
 		return (0);
-	if ((data->map[(int)pre_x][(int)pre_y]) == '3' \
-	&& (data->map[(int)x][(int)y]) == '2')
+	if ((data->map[(int)pre_point.x][(int)pre_point.y]) == '3' \
+	&& (data->map[(int)player.x][(int)player.y]) == '2')
 		return (0);
-	if ((data->map[(int)x][(int)y]) == '1' \
-	|| (data->map[(int)x][(int)y]) == ' ' \
-	|| (data->map[(int)x][(int)y]) == '\n' \
-	|| (data->map[(int)x][(int)y]) == '\0')
+	if (char_in_str(LIMIT, data->map[(int)player.x][(int)player.y]))
 		return (0);
 	return (1);
 }
 
 void	facing_ray(t_data *data)
 {
-	if (data->ray.angle_ray > 0 && data->ray.angle_ray < M_PI)
+	double	angle;
+
+	angle = data->ray.angle_ray;
+	if (angle > 0 && angle < M_PI)
 	{
 		data->ray.ray_face.down = 1;
 		data->ray.ray_face.up = 0;
@@ -49,7 +47,7 @@ void	facing_ray(t_data *data)
 		data->ray.ray_face.down = 0;
 		data->ray.ray_face.up = 1;
 	}
-	if(data->ray.angle_ray < (0.5 * M_PI) || data->ray.angle_ray > (1.5 * M_PI))
+	if (angle < (0.5 * M_PI) || angle > (1.5 * M_PI))
 	{
 		data->ray.ray_face.right = 1;
 		data->ray.ray_face.left = 0;
@@ -59,9 +57,10 @@ void	facing_ray(t_data *data)
 		data->ray.ray_face.right = 0;
 		data->ray.ray_face.left = 1;
 	}
+	data->ray.angle_ray = normalizeangle(data->ray.angle_ray);
 }
 
-double	normalizeangle(double	angle)
+double	normalizeangle(double angle)
 {
 	angle = fmod(angle, (2 * M_PI));
 	if (angle < 0)
@@ -69,69 +68,57 @@ double	normalizeangle(double	angle)
 	return (angle);
 }
 
-void	movement_key(t_data *data)
+void	movement_key(t_data *data, t_index step)
 {
-	double	step_x;
-	double	step_y;
-
-	step_x = STEP * cos(data->player.alpha);
-	step_y = STEP * sin(data->player.alpha);
 	if (data->my_hook.key_s == 1)
 	{
-		if (ft_check_wall(data, -step_y, -step_x))
+		if (ft_check_wall(data, -step.y, -step.x))
 		{
-			data->player.player_x = data->player.player_x - step_x;
-			data->player.player_y = data->player.player_y - step_y;
+			data->player.player_x = data->player.player_x - step.x;
+			data->player.player_y = data->player.player_y - step.y;
 		}
 	}
 	if (data->my_hook.key_w == 1)
 	{
-		if (ft_check_wall(data, step_y, step_x))
+		if (ft_check_wall(data, step.y, step.x))
 		{
-			data->player.player_x = data->player.player_x + step_x;
-			data->player.player_y = data->player.player_y + step_y;
+			data->player.player_x = data->player.player_x + step.x;
+			data->player.player_y = data->player.player_y + step.y;
 		}
 	}
-	if (data->my_hook.key_east == 1)
+	if (data->my_hook.key_d == 1)
 	{
-		data->player.alpha += ALPHA;
-		data->player.alpha = fmod(data->player.alpha, (2 * M_PI));
-		if (data->player.alpha < 0)
-			data->player.alpha = data->player.alpha + (2 * M_PI);
-		// facing_ray(data);
-	}
-	if (data->my_hook.key_west == 1)
-	{
-		data->player.alpha -= ALPHA;
-		data->player.alpha = fmod(data->player.alpha, (2 * M_PI));
-		if (data->player.alpha < 0)
-			data->player.alpha =  data->player.alpha + (2 * M_PI);
-		// facing_ray(data);
+		if (ft_check_wall(data, step.x, -step.y))
+		{
+			data->player.player_x = data->player.player_x - step.y;
+			data->player.player_y = data->player.player_y + step.x;
+		}
 	}
 }
 
 void	check_key(t_data *data)
 {
-	double	step_x;
-	double	step_y;
+	t_index	step;
 
-	step_x = STEP * cos(data->player.alpha);
-	step_y = STEP * sin(data->player.alpha);
-	movement_key(data);
+	step.x = STEP * cos(data->player.alpha);
+	step.y = STEP * sin(data->player.alpha);
+	movement_key(data, step);
 	if (data->my_hook.key_a == 1)
 	{
-		if (ft_check_wall(data, -step_x, step_y))
+		if (ft_check_wall(data, -step.x, step.y))
 		{
-			data->player.player_x = data->player.player_x + step_y;
-			data->player.player_y = data->player.player_y - step_x;
+			data->player.player_x = data->player.player_x + step.y;
+			data->player.player_y = data->player.player_y - step.x;
 		}
 	}
-	if (data->my_hook.key_d == 1)
+	if (data->my_hook.key_east == 1)
 	{
-		if (ft_check_wall(data, step_x, -step_y))
-		{
-			data->player.player_x = data->player.player_x - step_y;
-			data->player.player_y = data->player.player_y + step_x;
-		}
+		data->player.alpha += ALPHA;
+		data->player.alpha = normalizeangle(data->player.alpha);
+	}
+	if (data->my_hook.key_west == 1)
+	{
+		data->player.alpha -= ALPHA;
+		data->player.alpha = normalizeangle(data->player.alpha);
 	}
 }
