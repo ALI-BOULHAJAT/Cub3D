@@ -9,6 +9,8 @@
         "string_view": "c",
         "vector": "c",
         "__node_handle": "c",
-        "cub3d.h": "c"
+        "cub3d.h": "c",
+        "memory": "c",
+        "utility": "c"
     }
 }

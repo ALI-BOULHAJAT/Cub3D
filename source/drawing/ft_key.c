@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 19:45:58 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/08 16:07:28 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/09 18:45:21 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 int	ft_check_wall(t_data *data, double x_plus, double y_plus)
 {
 	t_index	player;
-	t_index	pre_point;
+	t_index	next_point;
 
-	player.x = data->player.init_x_player + data->player.player_y + x_plus;
-	player.y = data->player.init_y_player + data->player.player_x + y_plus;
-	pre_point.x = player.x - x_plus;
-	pre_point.y = player.y - y_plus;
-	if ((data->map[(int)pre_point.x][(int)pre_point.y]) == '2' \
+	player.x = data->player.init_x_player + data->player.player_y;
+	player.y = data->player.init_y_player + data->player.player_x;
+	next_point.x = player.x + x_plus;
+	next_point.y = player.y + y_plus;
+	if ((data->map[(int)next_point.x][(int)next_point.y]) == '2' \
 	&& (data->map[(int)player.x][(int)player.y]) == '3')
 		return (0);
-	if ((data->map[(int)pre_point.x][(int)pre_point.y]) == '3' \
+	if ((data->map[(int)next_point.x][(int)next_point.y]) == '3' \
 	&& (data->map[(int)player.x][(int)player.y]) == '2')
 		return (0);
-	if (char_in_str(LIMIT, data->map[(int)player.x][(int)player.y]))
+	if (char_in_str(LIMIT, data->map[(int)next_point.x][(int)next_point.y]))
 		return (0);
 	return (1);
 }
@@ -36,6 +36,7 @@ void	facing_ray(t_data *data)
 {
 	double	angle;
 
+	data->ray.angle_ray = normalizeangle(data->ray.angle_ray);
 	angle = data->ray.angle_ray;
 	if (angle > 0 && angle < M_PI)
 	{
@@ -57,7 +58,6 @@ void	facing_ray(t_data *data)
 		data->ray.ray_face.right = 0;
 		data->ray.ray_face.left = 1;
 	}
-	data->ray.angle_ray = normalizeangle(data->ray.angle_ray);
 }
 
 double	normalizeangle(double angle)

@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 09:52:43 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/08 19:06:26 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/09 18:42:49 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,18 @@ void	draw_fov(t_data *data)
 	t_index	ray;
 	int		index;
 
-	index = HIEGHT;
+	index = 0;
 	player = player_possition(data);
 	data->ray.angle_ray = data->player.alpha - (30 * (M_PI / 180));
-	while (index)
+	while (index < WEIGHT)
 	{
 		facing_ray(data);
 		horizontal_intersection(data);
 		vertical_intersection(data);
 		get_distance(data, &ray);
 		draw_line(data, player, ray, FOV_COLOR);
-		data->ray.angle_ray += (60 * (M_PI / 180)) / HIEGHT;
-		index -= 1;
+		data->ray.angle_ray += ((60 * (M_PI / 180)) / WEIGHT);
+		index++;
 	}
 }
 
@@ -84,7 +84,7 @@ void	get_distance(t_data *data, t_index *ray)
 		h_distance = distance_2_point(player, data->ray.horizontal_touch);
 	if (data->ray.found_v_wall)
 		v_distance = distance_2_point(player, data->ray.vertical_touch);
-	if (h_distance < v_distance)
+	if (h_distance > v_distance)
 	{
 		(*ray).x = data->ray.vertical_touch.x;
 		(*ray).y = data->ray.vertical_touch.y;

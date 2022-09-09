@@ -6,26 +6,27 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 15:04:42 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/09 19:50:39 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/09 17:43:15 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-int	ft_is_wall(t_data *data, double x, double y)
+int	char_in_str1(t_data *data, double x, double y)
 {
-	double		zoom;
+	int	i;
+	// double	zoom = data->texture.zoom;
 
-	zoom = data->texture.zoom;
-	if (x < 0 || (x / zoom) > data->texture.map_size.x \
-	|| y < 0 || (y / zoom) > data->texture.map_size.y)
+	i = 0;
+	printf("x-> %d map x-> %d y -> %d map y -> %d\n", (int)x, (int)y, data->texture.map_size.x, data->texture.map_size.y);
+	if ((int)y <= data->texture.map_size.x || (int)x <= data->texture.map_size.y)
 		return (1);
-	if (data->map[(int)(x / zoom)] \
-	&& data->map[(int)(x / zoom)][(int)(y / zoom)] \
-	&& char_in_str(LIMIT, data->map[(int)(x / zoom)][(int)(y / zoom)]))
-		return (1);
+	// if (char_in_str(LIMIT, data->map[(int)x][(int)y]))
+	// 	return (1);
 	return (0);
 }
+
+//  LIMIT, data->map[(int)(tmp / zoom)][(int)(inter.x / zoom)]
 
 void	while_horizontal(t_data *data, t_index inter, t_index step)
 {
@@ -38,7 +39,8 @@ void	while_horizontal(t_data *data, t_index inter, t_index step)
 		tmp = inter.y;
 		if (data->ray.ray_face.up)
 			tmp -= 1;
-		if (ft_is_wall(data, tmp, inter.x))
+		// printf("x-> %f y -> %f\n", tmp / zoom, inter.x / zoom);
+		if (char_in_str1(data, tmp / zoom, inter.x / zoom))
 		{
 			data->ray.found_h_wall = 1;
 			data->ray.horizontal_touch.x = inter.x;
@@ -64,13 +66,23 @@ void	while_vertical(t_data *data, t_index inter, t_index step)
 		tmp = inter.x;
 		if (data->ray.ray_face.left)
 			tmp -= 1;
-		if (ft_is_wall(data, inter.y, tmp))
+		// printf("x-> %f y -> %f\n", tmp, inter.x);
+		if (char_in_str1(data, inter.y / zoom , tmp / zoom))
 		{
 			data->ray.found_v_wall = 1;
+			// printf("hello\n");
 			data->ray.vertical_touch.x = inter.x;
 			data->ray.vertical_touch.y = inter.y;
 			break ;
 		}
+		// else if (is_v_wall(data, inter.y, tmp, step))
+		// {
+		// 	// printf("hello\n");
+		// 	data->ray.found_v_wall = 1;
+		// 	data->ray.vertical_touch.x = inter.x;
+		// 	data->ray.vertical_touch.y = inter.y;
+		// 	break ;
+		// }
 		else
 		{
 			inter.x += step.x;
@@ -85,6 +97,8 @@ void	horizontal_intersection(t_data *data)
 	t_index	h_inter;
 	t_index	step;
 
+	// data->ray.found_h_wall = 0;
+	// data->ray.found_v_wall = 0;
 	player = player_possition(data);
 	h_inter.y = data->texture.zoom * ((int)(player.y / data->texture.zoom));
 	if (data->ray.ray_face.down)
@@ -107,6 +121,8 @@ void	vertical_intersection(t_data *data)
 	t_index	step;
 	t_index	v_inter;
 
+	// data->ray.found_v_wall = 0;
+	// data->ray.found_h_wall = 0;
 	player = player_possition(data);
 	v_inter.x = data->texture.zoom * ((int)(player.x / data->texture.zoom));
 	if (data->ray.ray_face.right)
@@ -121,4 +137,11 @@ void	vertical_intersection(t_data *data)
 	if (data->ray.ray_face.down && step.y < 0)
 		step.y *= -1;
 	while_vertical(data, v_inter, step);
+}
+
+double	distance_2_point(t_index first, t_index last)
+{
+	// return (sqrt(((last.x - first.x) * (last.x - first.x)) \
+	// + ((last.y - first.y) * (last.y - first.y))));
+	return(sqrt(pow((last.x - first.x), 2) + pow((last.y - first.y), 2)));
 }

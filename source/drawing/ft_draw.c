@@ -6,11 +6,16 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:18:25 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/08 18:48:42 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/09 18:46:36 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
+
+double	distance_2_point(t_index first, t_index last)
+{
+	return (sqrt (pow((last.x - first.x), 2) + pow((last.y - first.y), 2)));
+}
 
 void	draw_rectangle(t_data *data, t_index_int first, int color)
 {
