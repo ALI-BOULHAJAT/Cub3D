@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:42:34 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/08 19:11:28 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/10 11:06:48 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ int	ft_key_press(int key, t_data *data)
 		data->my_hook.key_east = 1;
 	if (key == 123)
 		data->my_hook.key_west = 1;
+	if (key == 84)
+	{
+		data->view.view_2d = 1;
+		data->view.view_3d = 0;
+	}
+	if (key == 85)
+	{
+		data->view.view_2d = 0;
+		data->view.view_3d = 1;
+	}
 	if (key == 53)
 	{
 		mlx_destroy_window(data->img->mlx, data->img->win);

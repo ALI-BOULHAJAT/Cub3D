@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 15:04:42 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/09 19:50:39 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/10 19:53:10 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 int	ft_is_wall(t_data *data, double x, double y)
 {
 	double		zoom;
+	int			line;
 
 	zoom = data->texture.zoom;
+	if (x > 0 && (x / zoom) < data->texture.map_size.x)
+		line = ft_strlen(data->map[(int)(x / zoom)]);
 	if (x < 0 || (x / zoom) > data->texture.map_size.x \
-	|| y < 0 || (y / zoom) > data->texture.map_size.y)
+	|| y < 0 || (y / zoom) > line)
 		return (1);
 	if (data->map[(int)(x / zoom)] \
 	&& data->map[(int)(x / zoom)][(int)(y / zoom)] \
@@ -85,7 +88,7 @@ void	horizontal_intersection(t_data *data)
 	t_index	h_inter;
 	t_index	step;
 
-	player = player_possition(data);
+	player = player_possition_no_mouve(data);
 	h_inter.y = data->texture.zoom * ((int)(player.y / data->texture.zoom));
 	if (data->ray.ray_face.down)
 		h_inter.y += data->texture.zoom;
@@ -107,7 +110,7 @@ void	vertical_intersection(t_data *data)
 	t_index	step;
 	t_index	v_inter;
 
-	player = player_possition(data);
+	player = player_possition_no_mouve(data);
 	v_inter.x = data->texture.zoom * ((int)(player.x / data->texture.zoom));
 	if (data->ray.ray_face.right)
 		v_inter.x += data->texture.zoom;

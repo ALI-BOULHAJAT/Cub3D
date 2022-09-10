@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:18:25 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/09 18:46:36 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/10 19:54:28 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	draw_rectangle(t_data *data, t_index_int first, int color)
 
 	first.x *= data->texture.zoom;
 	first.y *= data->texture.zoom;
+	first.x += data->player.mouve.y;
+	first.y += data->player.mouve.x;
 	last.x = first.x + data->texture.zoom;
 	last.y = first.y + data->texture.zoom;
 	while ((double)first.y <= last.y - 1)
@@ -52,22 +54,59 @@ void	draw_map_2d(t_data *data)
 				draw_rectangle(data, index, 0x555555);
 			else if (char_in_str(PLAY_EMPT, data->map[index.x][index.y]))
 				draw_rectangle(data, index, 0xffffff);
-			if (char_in_str(PLAYER, data->map[index.x][index.y]))
-			{
-				data->player.face = data->map[index.x][index.y];
-				data->player.init_x_player = index.x + 0.5;
-				data->player.init_y_player = index.y + 0.5;
-			}
 			index.y++;
 		}
 		index.x++;
 	}
 }
 
+t_index	player_possition_no_mouve(t_data *data)
+{
+	t_index	index;
+
+	index.x = data->player.init_y_player + data->player.player_x ;
+	index.y = data->player.init_x_player + data->player.player_y;
+	index.x *= data->texture.zoom;
+	index.y *= data->texture.zoom;
+	return (index);
+}
+
+void	get_player_possition(t_data *data)
+{
+	t_index_int	index;
+	t_index		player;
+
+	index.x = 0;
+	player = player_possition_no_mouve(data);
+	while (data->map[index.x])
+	{
+		index.y = 0;
+		while (data->map[index.x][index.y])
+		{
+			if (char_in_str(PLAYER, data->map[index.x][index.y]))
+			{
+				data->player.face = data->map[index.x][index.y];
+				data->player.init_x_player = index.x + 0.5;
+				data->player.init_y_player = index.y + 0.5;
+				break ;
+			}
+			index.y++;
+		}
+		index.x++;
+	}
+	data->player.mouve.x = (RAY + 5) - player.x;
+	data->player.mouve.y = (RAY + 5) - player.y;
+}
+
 void	draw(t_data *data)
 {
-	draw_map_2d(data);
-	draw_fov(data);
+	if (data->view.view_2d)
+	{
+		get_player_possition(data);
+		draw_map_2d(data);
+		draw_fov(data);
+		draw_circle(data);
+	}
 }
 	// draw_circle(data);
 

@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:51:32 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/08 11:36:07 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/10 11:06:31 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,27 @@ void	int_key(t_data *data)
 
 void	init_struct(t_data *data)
 {
-	(data)->img = (t_img *)malloc(sizeof(t_img));
-	(data)->error = NULL;
-	(data)->texture.east = NULL;
-	(data)->texture.north = NULL;
-	(data)->texture.south = NULL;
-	(data)->texture.west = NULL;
-	(data)->texture.check = 0;
-	(data)->texture.read_in_map = 0;
-	(data)->player.n_player = 0;
-	(data)->texture.is_empty_line = 0;
-	(data)->img->d_size = 0;
-	(data)->img->endian = 0;
-	(data)->texture.zoom = 25;
-	(data)->player.player_x = 0;
-	(data)->player.player_y = 0;
-	(data)->player.to_east = 1;
-	(data)->player.to_north = 1;
-	(data)->player.to_south = 1;
-	(data)->player.to_west = 1;
+	data->img = (t_img *)malloc(sizeof(t_img));
+	data->error = NULL;
+	data->texture.east = NULL;
+	data->texture.north = NULL;
+	data->texture.south = NULL;
+	data->texture.west = NULL;
+	data->texture.check = 0;
+	data->texture.read_in_map = 0;
+	data->player.n_player = 0;
+	data->texture.is_empty_line = 0;
+	data->img->d_size = 0;
+	data->img->endian = 0;
+	data->texture.zoom = 25;
+	data->player.player_x = 0;
+	data->player.player_y = 0;
+	data->player.to_east = 1;
+	data->player.to_north = 1;
+	data->player.to_south = 1;
+	data->player.to_west = 1;
+	data->view.view_2d = 0;
+	data->view.view_3d = 0;
 	init_color(data->texture.floor);
 	init_color(data->texture.ceilling);
 	int_key(data);
