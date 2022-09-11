@@ -6,13 +6,13 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:42:34 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/10 11:06:48 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/11 10:56:06 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-int	ft_key_press(int key, t_data *data)
+void	pre_key_press(t_data *data, int key)
 {
 	if (key == 13)
 		data->my_hook.key_w = 1;
@@ -31,6 +31,11 @@ int	ft_key_press(int key, t_data *data)
 		data->view.view_2d = 1;
 		data->view.view_3d = 0;
 	}
+}
+
+int	ft_key_press(int key, t_data *data)
+{
+	pre_key_press(data, key);
 	if (key == 85)
 	{
 		data->view.view_2d = 0;
@@ -58,13 +63,6 @@ int	ft_key_release(int key, t_data *data)
 		data->my_hook.key_east = 0;
 	if (key == 123)
 		data->my_hook.key_west = 0;
-	return (0);
-}
-
-int	ft_close_x(t_data *data)
-{
-	mlx_destroy_window(data->img->mlx, data->img->win);
-	exit(0);
 	return (0);
 }
 

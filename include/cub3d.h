@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/10 13:30:02 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/11 10:55:57 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define CEILLING 0
 # define WEIGHT 1200
 # define HIEGHT 1600
-# define STEP 0.1
+# define STEP 0.2
 # define ALPHA 0.1
 # define RAY 150
 # define FOV_ANGLE 60
@@ -52,6 +52,7 @@ void	close_map(t_data *data);
 int		check_circle(char **map, int x, int y);
 void	init_face(t_data *data);
 int		char_in_str(char *str, char c);
+int		ft_close_x(t_data *data);
 
 /////////////  DRAWING ///////////////////////
 
@@ -70,10 +71,11 @@ double	distance_2_point(t_index first, t_index last);
 void	get_distance(t_data *data, t_index *ray);
 double	normalizeangle(double angle);
 void	facing_ray(t_data *data);
-t_index	player_possition(t_data *data, char check);
+t_index	player_possition(t_data *data, char zoom, char mouve);
 int		is_v_wall(t_data *data, double x, double y, t_index step);
-int     ft_is_wall(t_data *data, double x, double y);
+int		ft_is_wall(t_data *data, double x, double y);
 void	draw_circle(t_data *data);
-t_index	player_possition_no_mouve(t_data *data);
+int		point_in_circle(t_data *data, double y, double x);
+void	get_player_possition(t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 09:52:43 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/10 19:55:23 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/11 10:30:22 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,22 @@ double	ft_diff(double x, double y)
 	return (y - x);
 }
 
-t_index	player_possition(t_data *data, char check)
+t_index	player_possition(t_data *data, char zoom, char mouve)
 {
 	t_index	index;
 
 	index.x = data->player.init_y_player + data->player.player_x;
 	index.y = data->player.init_x_player + data->player.player_y;
-	if (check == 'Z')
+	if (zoom == 'Y')
 	{
 		index.x *= data->texture.zoom;
 		index.y *= data->texture.zoom;
 	}
-	index.x += data->player.mouve.x;
-	index.y += data->player.mouve.y;
+	if (mouve == 'Y')
+	{
+		index.x += data->player.mouve.x;
+		index.y += data->player.mouve.y;
+	}
 	return (index);
 }
 
@@ -40,7 +43,7 @@ void	draw_fov(t_data *data)
 	int		index;
 
 	index = 0;
-	player = player_possition(data, 'Z');
+	player = player_possition(data, 'Y', 'Y');
 	data->ray.angle_ray = data->player.alpha - (30 * (M_PI / 180));
 	while (index < WEIGHT)
 	{
@@ -66,7 +69,8 @@ void	draw_line(t_data *data, t_index first, t_index last, int color)
 		step = fabs(ft_diff(first.y, last.y));
 	while (i < step)
 	{
-		ft_put_pixel(first.x, first.y, data, color);
+		if (point_in_circle(data, first.x, first.y))
+			ft_put_pixel(first.x, first.y, data, color);
 		first.x += ft_diff(first.x, last.x) / step;
 		first.y += ft_diff(first.y, last.y) / step;
 		i += 0.1;
@@ -81,7 +85,7 @@ void	get_distance(t_data *data, t_index *ray)
 
 	h_distance = 0;
 	v_distance = 0;
-	player = player_possition_no_mouve(data);
+	player = player_possition(data, 'Y', 'N');
 	if (data->ray.found_h_wall)
 		h_distance = distance_2_point(player, data->ray.horizontal_touch);
 	if (data->ray.found_v_wall)

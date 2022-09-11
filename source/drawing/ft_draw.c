@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:18:25 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/10 19:54:28 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/11 10:53:53 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	draw_rectangle(t_data *data, t_index_int first, int color)
 		tmp = first.x;
 		while (tmp <= last.x - 1)
 		{
-			ft_put_pixel(first.y, tmp, data, color);
+			if (point_in_circle(data, first.y, tmp))
+				ft_put_pixel(first.y, tmp, data, color);
 			tmp++;
 		}
 		first.y++;
@@ -58,44 +59,6 @@ void	draw_map_2d(t_data *data)
 		}
 		index.x++;
 	}
-}
-
-t_index	player_possition_no_mouve(t_data *data)
-{
-	t_index	index;
-
-	index.x = data->player.init_y_player + data->player.player_x ;
-	index.y = data->player.init_x_player + data->player.player_y;
-	index.x *= data->texture.zoom;
-	index.y *= data->texture.zoom;
-	return (index);
-}
-
-void	get_player_possition(t_data *data)
-{
-	t_index_int	index;
-	t_index		player;
-
-	index.x = 0;
-	player = player_possition_no_mouve(data);
-	while (data->map[index.x])
-	{
-		index.y = 0;
-		while (data->map[index.x][index.y])
-		{
-			if (char_in_str(PLAYER, data->map[index.x][index.y]))
-			{
-				data->player.face = data->map[index.x][index.y];
-				data->player.init_x_player = index.x + 0.5;
-				data->player.init_y_player = index.y + 0.5;
-				break ;
-			}
-			index.y++;
-		}
-		index.x++;
-	}
-	data->player.mouve.x = (RAY + 5) - player.x;
-	data->player.mouve.y = (RAY + 5) - player.y;
 }
 
 void	draw(t_data *data)

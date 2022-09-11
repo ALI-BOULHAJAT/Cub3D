@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 15:04:42 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/10 19:53:10 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/11 10:31:03 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	horizontal_intersection(t_data *data)
 	t_index	h_inter;
 	t_index	step;
 
-	player = player_possition_no_mouve(data);
+	player = player_possition(data, 'Y', 'N');
 	h_inter.y = data->texture.zoom * ((int)(player.y / data->texture.zoom));
 	if (data->ray.ray_face.down)
 		h_inter.y += data->texture.zoom;
@@ -110,7 +110,7 @@ void	vertical_intersection(t_data *data)
 	t_index	step;
 	t_index	v_inter;
 
-	player = player_possition_no_mouve(data);
+	player = player_possition(data, 'Y', 'N');
 	v_inter.x = data->texture.zoom * ((int)(player.x / data->texture.zoom));
 	if (data->ray.ray_face.right)
 		v_inter.x += data->texture.zoom;
