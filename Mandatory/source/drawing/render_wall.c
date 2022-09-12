@@ -6,11 +6,11 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 11:02:05 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/12 14:05:16 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/12 14:17:02 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d_bonus.h"
+#include "../../include/cub3d.h"
 
 void	draw_rectangle_wall(t_data *data, double wall_height, int ray_id)
 {
@@ -34,6 +34,15 @@ void	draw_wall(t_data *data, double ray_distance, int ray_id)
 	double	distance_pr_pl;
 
 	distance_pr_pl = (WEIGHT / 2) / tan(30 * (M_PI / 180));
-	wall_hight = (data->texture.zoom / ray_distance) * distance_pr_pl;
+	wall_hight = (data->texture.zoom / (ray_distance)) * distance_pr_pl;
 	draw_rectangle_wall(data, wall_hight, ray_id);
+}
+
+void	drawing(t_data *data)
+{
+	(void)data;
+	data->img->mlx = mlx_init();
+	data->img->win = mlx_new_window(data->img->mlx, WEIGHT, HIEGHT, "Cub3D");
+	drow_to_img(data);
+	ft_hook(data);
 }

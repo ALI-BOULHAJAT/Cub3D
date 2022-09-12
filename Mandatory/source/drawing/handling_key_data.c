@@ -6,11 +6,11 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:42:34 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/12 14:15:54 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/11 17:26:56 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d_bonus.h"
+#include "../../include/cub3d.h"
 
 void	pre_key_press(t_data *data, int key)
 {
@@ -28,16 +28,28 @@ void	pre_key_press(t_data *data, int key)
 		data->my_hook.key_west = 1;
 	if (key == 84)
 	{
-		if (data->view.view_2d == 0)
-			data->view.view_2d = 1;
-		else
-			data->view.view_2d = 0;
+		data->view.view_2d = 1;
+		data->view.view_3d = 0;
 	}
+}
+
+int	ft_movekey(t_data *data)
+{
+	check_key(data);
+	mlx_clear_window(data->img->mlx, data->img->win);
+	mlx_destroy_image(data->img->mlx, data->img->img);
+	drow_to_img(data);
+	return (0);
 }
 
 int	ft_key_press(int key, t_data *data)
 {
 	pre_key_press(data, key);
+	if (key == 85)
+	{
+		data->view.view_2d = 0;
+		data->view.view_3d = 1;
+	}
 	if (key == 53)
 	{
 		mlx_destroy_window(data->img->mlx, data->img->win);
@@ -63,29 +75,11 @@ int	ft_key_release(int key, t_data *data)
 	return (0);
 }
 
-int	ft_zoom(int mouse, int x, int y, t_data *data)
-{
-	(void)x;
-	(void)y;
-	if (mouse == 5)
-		data->texture.zoom += 1;
-	if (mouse == 4)
-	{
-		if (data->texture.zoom > 1)
-			data->texture.zoom -= 1;
-	}
-	mlx_clear_window(data->img->mlx, data->img->win);
-	mlx_destroy_image(data->img->mlx, data->img->img);
-	drow_to_img(data);
-	return (0);
-}
-
 void	ft_hook(t_data *data)
 {
 	mlx_hook(data->img->win, 2, 0, ft_key_press, data);
 	mlx_hook(data->img->win, 3, 0, ft_key_release, data);
 	mlx_loop_hook(data->img->mlx, ft_movekey, data);
 	mlx_hook(data->img->win, 17, 0, ft_close_x, data);
-	mlx_hook(data->img->win, 4, 0, ft_zoom, data);
 	mlx_loop(data->img->mlx);
 }

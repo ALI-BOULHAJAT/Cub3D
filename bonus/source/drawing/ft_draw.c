@@ -6,16 +6,11 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:18:25 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/11 17:44:12 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/12 14:10:51 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d_bonus.h"
-
-double	distance_2_point(t_index first, t_index last)
-{
-	return (sqrt (pow((last.x - first.x), 2) + pow((last.y - first.y), 2)));
-}
 
 void	draw_rectangle(t_data *data, t_index_int first, int color)
 {
@@ -44,8 +39,12 @@ void	draw_rectangle(t_data *data, t_index_int first, int color)
 void	draw_map_2d(t_data *data)
 {
 	t_index_int	index;
+	t_index		player;
+	t_casting	*head;
 
 	index.x = 0;
+	player = player_possition(data, 'Y', 'Y');
+	head = data->casting;
 	while (data->map[index.x])
 	{
 		index.y = 0;
@@ -59,19 +58,37 @@ void	draw_map_2d(t_data *data)
 		}
 		index.x++;
 	}
+	while (head != NULL)
+	{
+		draw_line(data, player, head->ray, FOV_COLOR);
+		head = head->next;
+	}
+}
+
+void	free_struct(t_data *data)
+{
+	t_casting	*tmp;
+
+	while (data->casting != NULL)
+	{
+		tmp = data->casting->next;
+		free(data->casting);
+		data->casting = tmp;
+	}
+	free(data->casting);
 }
 
 void	draw(t_data *data)
 {
+	get_player_possition(data);
+	draw_3d(data);
 	if (data->view.view_2d)
 	{
-		get_player_possition(data);
 		draw_map_2d(data);
-		draw_fov(data);
 		draw_circle(data);
 	}
+	free_struct(data);
 }
-	// draw_circle(data);
 
 void	drow_to_img(t_data *data)
 {

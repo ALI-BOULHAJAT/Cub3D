@@ -6,11 +6,11 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 09:52:43 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/12 14:08:21 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/11 17:43:20 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d_bonus.h"
+#include "../../include/cub3d.h"
 
 void	draw_background(t_data *data, int f_color, int c_color)
 {
@@ -70,29 +70,8 @@ void	draw_3d(t_data *data)
 		vertical_intersection(data);
 		ray_distance = get_distance(data, &ray);
 		draw_wall(data, ray_distance, index);
-		ft_addback(&data->casting, ray, ray_distance, index);
 		data->ray.angle_ray += ((60 * (M_PI / 180)) / WEIGHT);
 		index++;
-	}
-}
-
-void	draw_line(t_data *data, t_index first, t_index last, int color)
-{
-	double	i;
-	double	step;
-
-	i = 0;
-	if (fabs(ft_diff(first.x, last.x)) > fabs(ft_diff(first.y, last.y)))
-		step = fabs(ft_diff(first.x, last.x));
-	else
-		step = fabs(ft_diff(first.y, last.y));
-	while (i < step)
-	{
-		if (point_in_circle(data, first.x, first.y))
-			ft_put_pixel(first.x, first.y, data, color);
-		first.x += ft_diff(first.x, last.x) / step;
-		first.y += ft_diff(first.y, last.y) / step;
-		i += 0.1;
 	}
 }
 
@@ -120,5 +99,17 @@ double	get_distance(t_data *data, t_index *ray)
 		(*ray).x = data->ray.horizontal_touch.x + data->player.mouve.x;
 		(*ray).y = data->ray.horizontal_touch.y + data->player.mouve.y;
 		return (h_distance);
+	}
+}
+
+void	ft_put_pixel(int x, int y, t_data *data, int color)
+{
+	char	*adr;
+
+	if ((x > 0 && x < WEIGHT) && (y > 0 && y < HIEGHT))
+	{
+		adr = data->img->addr + (y * data->img->d_size) \
+		+ (x * (data->img->bit_img / 8));
+		*((unsigned int *)adr) = color;
 	}
 }
