@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/11 17:34:37 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/12 17:52:09 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ void	get_player_possition(t_data *data);
 
 ////// wall////
 void	draw_wall(t_data *data, double ray_distance, int ray_id);
+int		color_converter(t_color *color);
 
 #endif

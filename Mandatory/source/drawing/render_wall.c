@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 11:02:05 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/12 14:17:02 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/12 17:51:35 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,9 @@ void	drawing(t_data *data)
 	data->img->win = mlx_new_window(data->img->mlx, WEIGHT, HIEGHT, "Cub3D");
 	drow_to_img(data);
 	ft_hook(data);
+}
+
+int	color_converter(t_color *color)
+{
+	return ((color->r << 16) | (color->g << 8) | color->b);
 }

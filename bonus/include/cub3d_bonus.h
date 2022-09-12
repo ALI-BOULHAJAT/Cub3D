@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/12 14:08:51 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/12 17:56:19 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,6 @@ double	ft_diff(double x, double y);
 ////// wall////
 void	draw_wall(t_data *data, double ray_distance, int ray_id);
 void	ft_addback(t_casting **lst, t_index ray, double distance, int id);
+int		color_converter(t_color *color);
 
 #endif

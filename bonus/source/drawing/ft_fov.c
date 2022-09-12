@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 09:52:43 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/12 14:08:21 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/12 17:54:32 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,16 @@ void	draw_3d(t_data *data)
 	index = 0;
 	player = player_possition(data, 'Y', 'Y');
 	data->ray.angle_ray = data->player.alpha - (30 * (M_PI / 180));
-	draw_background(data, 0x99E9FF, 0x99CD4B);
+	draw_background(data, color_converter(&data->texture.floor), \
+	color_converter(&data->texture.ceilling));
 	while (index < WEIGHT)
 	{
 		facing_ray(data);
 		horizontal_intersection(data);
 		vertical_intersection(data);
 		ray_distance = get_distance(data, &ray);
+		ray_distance = ray_distance * \
+		cos(data->ray.angle_ray - data->player.alpha);
 		draw_wall(data, ray_distance, index);
 		ft_addback(&data->casting, ray, ray_distance, index);
 		data->ray.angle_ray += ((60 * (M_PI / 180)) / WEIGHT);

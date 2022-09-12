@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:46:36 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/11 17:43:33 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/12 17:55:40 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ int	main(int ac, char **av)
 		printf("\x1b[31m🚫 %s 🚫\033[0m\n", data.error);
 	}
 	else
+	{
 		drawing(&data);
+	}
 	return (0);
 }
 		// print_data(data);
