@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 11:02:05 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/12 17:51:35 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/09/19 07:59:50 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@ void	draw_rectangle_wall(t_data *data, double wall_height, int ray_id)
 	t_index	first;
 
 	first.x = (HIEGHT / 2) - (wall_height / 2);
+	if (first.x < 0)
+		first.x = 0;
 	first.y = ray_id * 1;
 	last.x = first.x + wall_height;
+	if (last.x > HIEGHT)
+		last.x = HIEGHT;
 	last.y = first.y + 1;
 	while (first.x <= last.x)
 	{
@@ -34,6 +38,7 @@ void	draw_wall(t_data *data, double ray_distance, int ray_id)
 	double	distance_pr_pl;
 
 	distance_pr_pl = (WEIGHT / 2) / tan(30 * (M_PI / 180));
+	ray_distance = ray_distance * (cos(data->ray.angle_ray - data->player.alpha));
 	wall_hight = (data->texture.zoom / (ray_distance)) * distance_pr_pl;
 	draw_rectangle_wall(data, wall_hight, ray_id);
 }
