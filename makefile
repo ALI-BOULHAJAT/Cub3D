@@ -53,7 +53,7 @@ $(NAME) : $(OBJS) _libft
 
 bonus: $(OBJS_B)
 	@rm -rf $(OBJS) $(NAME)
-	@make fclean -C $(LIBFT_DIR)
+	#@make fclean -C $(LIBFT_DIR)
 	@ make bonus -C $(LIBFT_DIR_B)
 	@$(CC)  $(CFLAGS) $(OBJS_B) $(LIBFT_DIR_B)/libft.a -lmlx -framework OpenGL -framework AppKit -o $(NAME_B)
 	@printf "\x1b[32m  ✅     Make Bonus successfully    💯 ✅\033[0m\n"
@@ -63,7 +63,7 @@ bonus: $(OBJS_B)
 
 clean : 
 	@rm -rf $(OBJS) $(OBJS_B)
-	@make fclean -C $(LIBFT_DIR)
+	@make fclean -C $(LIBFT_DIR_B)
 
 fclean : clean
 	@rm -rf $(NAME) $(NAME_B)
