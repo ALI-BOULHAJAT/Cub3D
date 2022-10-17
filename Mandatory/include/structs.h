@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:58:17 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/10 15:04:21 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/17 07:23:42 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,14 @@ typedef struct s_texture
 	int			zoom;
 	t_color		floor;
 	t_color		ceilling;
+	int			*b_north;
+	int			*b_south;
+	int			*b_east;
+	int			*b_west;
+	t_index_int	n_size;
+	t_index_int	s_size;
+	t_index_int	e_size;
+	t_index_int	w_size;
 
 }	t_texture;
 
@@ -93,6 +101,7 @@ typedef struct s_ray
 	t_face	ray_face;
 	int		found_h_wall;
 	int		found_v_wall;
+	int		horizontal_best;
 	int		v_is_best;
 	int		h_is_best;
 	t_index	vertical_touch;
@@ -102,6 +111,7 @@ typedef struct s_ray
 	double	x_intersection_step[2];
 	double	first_y_intersection[2];
 	double	y_intersection_step[2];
+	double	wall_height;
 }	t_ray;
 
 typedef struct s_hook

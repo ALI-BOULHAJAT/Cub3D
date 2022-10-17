@@ -6,25 +6,11 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:50:06 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/12 11:41:11 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:24:44 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d_bonus.h"
-
-int	empty_line(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 int	check_texture_done(t_data *data)
 {
@@ -89,13 +75,35 @@ void	while_loop(t_data *data, int fd)
 	}
 }
 
+void	update_v_wall(t_data *data)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	while (data->map[x])
+	{
+		y = 0;
+		while (data->map[x][y])
+		{
+			if (data->map[x][y] == '2' && data->map[x][y + 1] == '3')
+				data->map[x][y] = '3';
+			else if (data->map[x][y] == '3' && data->map[x][y + 1] == '2')
+				data->map[x + 1][y] = '2';
+			y++;
+		}
+		x++;
+	}
+}
+
 void	read_map(t_data *data, char **av)
 {
 	int		fd;
 	int		index;
 
 	init_struct(data);
-	data->casting = NULL;
+	data->img->mlx = mlx_init();
+	data->img->win = mlx_new_window(data->img->mlx, WIDTH, HEIGHT, "B_CUB3D");
 	map_size(data, av[1]);
 	fd = open(av[1], O_RDONLY);
 	index = 0;
@@ -103,6 +111,7 @@ void	read_map(t_data *data, char **av)
 	{
 		while_loop(data, fd);
 		close_map(data);
+		update_v_wall(data);
 	}
 	else if (!data->error)
 		data->error = ft_strdup("file not valid");

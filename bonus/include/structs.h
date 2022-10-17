@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:58:17 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/12 14:02:52 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/17 09:50:00 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,6 @@ typedef struct s_player
 	char	face;
 }	t_player;
 
-typedef struct s_casting
-{
-	t_index				ray;
-	double				distance;
-	int					ray_id;
-	struct s_casting	*next;
-}	t_casting;
-
 typedef struct s_texture
 {
 	char		*north;
@@ -93,6 +85,14 @@ typedef struct s_texture
 	int			zoom;
 	t_color		floor;
 	t_color		ceilling;
+	int			*b_north;
+	int			*b_south;
+	int			*b_east;
+	int			*b_west;
+	t_index_int	n_size;
+	t_index_int	s_size;
+	t_index_int	e_size;
+	t_index_int	w_size;
 
 }	t_texture;
 
@@ -101,6 +101,7 @@ typedef struct s_ray
 	t_face	ray_face;
 	int		found_h_wall;
 	int		found_v_wall;
+	int		horizontal_best;
 	int		v_is_best;
 	int		h_is_best;
 	t_index	vertical_touch;
@@ -110,6 +111,7 @@ typedef struct s_ray
 	double	x_intersection_step[2];
 	double	first_y_intersection[2];
 	double	y_intersection_step[2];
+	double	wall_height;
 }	t_ray;
 
 typedef struct s_hook
@@ -133,7 +135,6 @@ typedef struct s_view
 typedef struct s_data
 {
 	t_texture	texture;
-	t_casting	*casting;
 	t_view		view;
 	t_player	player;
 	t_img		*img;
@@ -144,4 +145,12 @@ typedef struct s_data
 
 }	t_data;
 
+	// t_casting	*casting;
+// typedef struct s_casting
+// {
+// 	t_index				ray;
+// 	double				distance;
+// 	int					ray_id;
+// 	struct s_casting	*next;
+// }	t_casting;
 #endif

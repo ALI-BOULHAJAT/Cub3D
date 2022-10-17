@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/12 17:56:19 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:28:17 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdlib.h>
 
 # include "structs.h"
-# include "../libft/libft.h"
+# include "../../libft/libft.h"
 # include "utils.h"
 # include "macros.h"
 # include <mlx.h>
@@ -27,10 +27,10 @@
 
 # define FLOOR  0
 # define CEILLING 0
-# define WEIGHT 1600
-# define HIEGHT 1200
-# define STEP 0.1
-# define ALPHA 0.05
+# define WIDTH 1600
+# define HEIGHT 1200
+# define STEP 0.2
+# define ALPHA 0.1
 # define RAY 150
 # define FOV_ANGLE 60
 
@@ -78,10 +78,10 @@ void	draw_circle(t_data *data);
 int		point_in_circle(t_data *data, double y, double x);
 void	get_player_possition(t_data *data);
 double	ft_diff(double x, double y);
+void	storage_color(t_data *data, char *line, t_color *variable, int type);
 
 ////// wall////
-void	draw_wall(t_data *data, double ray_distance, int ray_id);
-void	ft_addback(t_casting **lst, t_index ray, double distance, int id);
+void	draw_wall(t_data *data, double ray_distance, int ray_id, t_index ray);
 int		color_converter(t_color *color);
 
 #endif

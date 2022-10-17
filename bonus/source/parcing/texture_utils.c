@@ -6,53 +6,54 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:33 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/11 17:45:29 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:26:18 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d_bonus.h"
-
-void	color_data(t_data *data, t_color *data_color, char *color, int type)
-{
-	char	**tab;
-	int		index;
-
-	index = 0;
-	tab = ft_split(color, ',');
-	while (tab[index])
-		index++;
-	if (index == 3)
-	{
-		if (type == F)
-			(*data_color).t = FLOOR;
-		else if (type == C)
-			(*data_color).t = CEILLING;
-		(*data_color).r = ft_atoi(tab[0]);
-		(*data_color).g = ft_atoi(tab[1]);
-		(*data_color).b = ft_atoi(tab[2]);
-	}
-	else if (!data->error)
-		data->error = ft_strdup("error color no valid");
-	if (((*data_color).r < 0 || (*data_color).g < 0
-			|| (*data_color).b < 0 || (*data_color).r > 255
-			|| (*data_color).g > 255 || (*data_color).b > 255) \
-			&& !data->error)
-		data->error = ft_strdup("error color no valid");
-	ft_free_tab(tab);
-}
-
-void	storage_color(t_data *data, char *line, t_color *variable, int type)
-{
-	if ((*variable).r == -1)
-		data->texture.check++;
-	color_data(data, variable, line, type);
-}
 
 void	pre_storage_texture(t_data *data, char *line, char **variable)
 {
 	if (!*variable)
 		data->texture.check++;
 	(*variable) = ft_strdup(line);
+}
+
+int	*opening_texture(t_data *data, char *file, t_index_int *size)
+{
+	int	*face;
+
+	face = NULL;
+	data->img->img = mlx_xpm_file_to_image(data->img->mlx, \
+	file, &size->x, &size->y);
+	if (data->img->img == NULL)
+		data->error = ft_strdup("error in xpm file");
+	else
+		face = (int *)mlx_get_data_addr(data->img->img, \
+		&data->img->bit_img, &data->img->d_size, &data->img->endian);
+	return (face);
+}
+
+void	else_if(t_data *data, char *line, int fd, int type)
+{
+	if (type == WE && fd > 0)
+	{
+		pre_storage_texture(data, line, &data->texture.west);
+		data->texture.b_west = opening_texture(data, \
+		line, &data->texture.w_size);
+	}
+	else if (type == EA && fd > 0)
+	{
+		pre_storage_texture(data, line, &data->texture.east);
+		data->texture.b_east = opening_texture(data, line, \
+		&data->texture.e_size);
+	}
+	else if (type == F)
+		storage_color(data, line, &data->texture.floor, F);
+	else if (type == C)
+		storage_color(data, line, &data->texture.ceilling, C);
+	else if (!data->error)
+		data->error = ft_strdup("error texture not valid");
 }
 
 void	texture_to_data(t_data *data, char *line, int size, int type)
@@ -65,19 +66,19 @@ void	texture_to_data(t_data *data, char *line, int size, int type)
 	line = ft_strtrim(line, "\n");
 	fd = open(line, O_RDONLY);
 	if (type == NO && fd > 0)
+	{
 		pre_storage_texture(data, line, &data->texture.north);
+		data->texture.b_north = opening_texture(data, \
+		line, &data->texture.n_size);
+	}
 	else if (type == SO && fd > 0)
+	{
 		pre_storage_texture(data, line, &data->texture.south);
-	else if (type == WE && fd > 0)
-		pre_storage_texture(data, line, &data->texture.west);
-	else if (type == EA && fd > 0)
-		pre_storage_texture(data, line, &data->texture.east);
-	else if (type == F)
-		storage_color(data, line, &data->texture.floor, F);
-	else if (type == C)
-		storage_color(data, line, &data->texture.ceilling, C);
-	else if (!data->error)
-		data->error = ft_strdup("error texture not valide");
+		data->texture.b_south = opening_texture(data, line, \
+		&data->texture.s_size);
+	}
+	else
+		else_if(data, line, fd, type);
 	free(line);
 	close(fd);
 }

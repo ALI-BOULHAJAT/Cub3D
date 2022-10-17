@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/12 17:52:09 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/17 07:23:01 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdlib.h>
 
 # include "structs.h"
-# include "../libft/libft.h"
+# include "../../libft/libft.h"
 # include "utils.h"
 # include "macros.h"
 # include <mlx.h>
@@ -27,10 +27,10 @@
 
 # define FLOOR  0
 # define CEILLING 0
-# define WEIGHT 1600
-# define HIEGHT 1200
-# define STEP 0.1
-# define ALPHA 0.05
+# define WIDTH 1600
+# define HEIGHT 1200
+# define STEP 0.2
+# define ALPHA 0.1
 # define RAY 150
 # define FOV_ANGLE 60
 
@@ -40,6 +40,9 @@
 /////////////// PARCING ///////////////////////
 
 void	read_map(t_data *data, char **av);
+int		check_texture_done(t_data *data);
+void	pre_storage_texture(t_data *data, char *line, char **variable);
+void	storage_color(t_data *data, char *line, t_color *variable, int type);
 void	color_data(t_data *data, t_color *data_color, char *color, int type);
 void	texture_to_data(t_data *data, char *line, int size, int type);
 void	texture_storage(t_data *data, char *line);
@@ -79,7 +82,7 @@ int		point_in_circle(t_data *data, double y, double x);
 void	get_player_possition(t_data *data);
 
 ////// wall////
-void	draw_wall(t_data *data, double ray_distance, int ray_id);
+void	draw_wall(t_data *data, double ray_distance, int ray_id, t_index ray);
 int		color_converter(t_color *color);
 
 #endif

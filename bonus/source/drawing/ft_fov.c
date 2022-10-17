@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 09:52:43 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/12 17:54:32 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:18:13 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	draw_background(t_data *data, int f_color, int c_color)
 	int	y;
 
 	y = 0;
-	while (y <= HIEGHT)
+	while (y <= HEIGHT)
 	{
 		x = 0;
-		while (x <= WEIGHT)
+		while (x <= WIDTH)
 		{
-			if (y < (HIEGHT / 2))
+			if (y < (HEIGHT / 2))
 				ft_put_pixel(x, y, data, f_color);
 			else
 				ft_put_pixel(x, y, data, c_color);
@@ -64,17 +64,14 @@ void	draw_3d(t_data *data)
 	data->ray.angle_ray = data->player.alpha - (30 * (M_PI / 180));
 	draw_background(data, color_converter(&data->texture.floor), \
 	color_converter(&data->texture.ceilling));
-	while (index < WEIGHT)
+	while (index < WIDTH)
 	{
 		facing_ray(data);
 		horizontal_intersection(data);
 		vertical_intersection(data);
 		ray_distance = get_distance(data, &ray);
-		ray_distance = ray_distance * \
-		cos(data->ray.angle_ray - data->player.alpha);
-		draw_wall(data, ray_distance, index);
-		ft_addback(&data->casting, ray, ray_distance, index);
-		data->ray.angle_ray += ((60 * (M_PI / 180)) / WEIGHT);
+		draw_wall(data, ray_distance, index, ray);
+		data->ray.angle_ray += ((60 * (M_PI / 180)) / WIDTH);
 		index++;
 	}
 }
@@ -116,12 +113,14 @@ double	get_distance(t_data *data, t_index *ray)
 	{
 		(*ray).x = data->ray.vertical_touch.x + data->player.mouve.x;
 		(*ray).y = data->ray.vertical_touch.y + data->player.mouve.y;
+		data->ray.horizontal_best = 0;
 		return (v_distance);
 	}
 	else
 	{
 		(*ray).x = data->ray.horizontal_touch.x + data->player.mouve.x;
 		(*ray).y = data->ray.horizontal_touch.y + data->player.mouve.y;
+		data->ray.horizontal_best = 1;
 		return (h_distance);
 	}
 }

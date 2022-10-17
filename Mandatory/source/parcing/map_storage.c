@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:50:06 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/08 12:54:44 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/17 05:07:55 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,68 +42,16 @@ int	check_texture_done(t_data *data)
 		return (1);
 }
 
-void	pre_while(t_data *data, char *line, int *index, int *i_map)
+void	storage_color(t_data *data, char *line, t_color *variable, int type)
 {
-	if (!empty_line(line) || data->texture.read_in_map == 1)
-	{
-		if ((*index) < 6 && !data->error)
-		{
-			texture_storage(data, line);
-			(*index)++;
-		}
-		else if (check_texture_done(data) && !data->error)
-		{
-			if (empty_line(line) && !data->error)
-				data->texture.is_empty_line = 1;
-			else if (data->texture.is_empty_line == 1)
-				data->error = ft_strdup("empty line in map");
-			else
-			{
-				data->texture.read_in_map = 1;
-				data->map[(*i_map)] = ft_strdup(line);
-				(*i_map)++;
-			}
-		}
-	}
-	data->map[(*i_map)] = NULL;
-	free(line);
-	line = NULL;
+	if ((*variable).r == -1)
+		data->texture.check++;
+	color_data(data, variable, line, type);
 }
 
-void	while_loop(t_data *data, int fd)
+void	pre_storage_texture(t_data *data, char *line, char **variable)
 {
-	char	*line;
-	int		index;
-	int		i_map;
-
-	index = 0;
-	i_map = 0;
-	data->map = (char **)malloc(sizeof(char **) \
-	* (data->texture.map_size.x + 1));
-	while (!data->error)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		pre_while(data, line, &index, &i_map);
-	}
-}
-
-void	read_map(t_data *data, char **av)
-{
-	int		fd;
-	int		index;
-
-	init_struct(data);
-	map_size(data, av[1]);
-	fd = open(av[1], O_RDONLY);
-	index = 0;
-	if (fd > 0 && file_type(av[1], ".cub") && !data->error)
-	{
-		while_loop(data, fd);
-		close_map(data);
-	}
-	else if (!data->error)
-		data->error = ft_strdup("file not valid");
-	close(fd);
+	if (!*variable)
+		data->texture.check++;
+	(*variable) = ft_strdup(line);
 }

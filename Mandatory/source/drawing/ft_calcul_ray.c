@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 15:04:42 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/11 10:31:03 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/17 05:10:30 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	ft_is_wall(t_data *data, double x, double y)
 	if (x < 0 || (x / zoom) > data->texture.map_size.x \
 	|| y < 0 || (y / zoom) > line)
 		return (1);
-	if (data->map[(int)(x / zoom)] \
-	&& data->map[(int)(x / zoom)][(int)(y / zoom)] \
-	&& char_in_str(LIMIT, data->map[(int)(x / zoom)][(int)(y / zoom)]))
+	if (data->map[(int)(x / zoom)] && \
+	data->map[(int)(x / zoom)][(int)(y / zoom)] && \
+	char_in_str(LIMIT, data->map[(int)(x / zoom)][(int)(y / zoom)]))
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:18:25 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/12 14:10:51 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:17:55 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@ void	draw_map_2d(t_data *data)
 {
 	t_index_int	index;
 	t_index		player;
-	t_casting	*head;
+	t_index		line;
 
 	index.x = 0;
 	player = player_possition(data, 'Y', 'Y');
-	head = data->casting;
+	line.x = player.x + (20 * cos(data->player.alpha));
+	line.y = player.y + (20 * sin(data->player.alpha));
 	while (data->map[index.x])
 	{
 		index.y = 0;
@@ -58,36 +59,7 @@ void	draw_map_2d(t_data *data)
 		}
 		index.x++;
 	}
-	while (head != NULL)
-	{
-		draw_line(data, player, head->ray, FOV_COLOR);
-		head = head->next;
-	}
-}
-
-void	free_struct(t_data *data)
-{
-	t_casting	*tmp;
-
-	while (data->casting != NULL)
-	{
-		tmp = data->casting->next;
-		free(data->casting);
-		data->casting = tmp;
-	}
-	free(data->casting);
-}
-
-void	draw(t_data *data)
-{
-	get_player_possition(data);
-	draw_3d(data);
-	if (data->view.view_2d)
-	{
-		draw_map_2d(data);
-		draw_circle(data);
-	}
-	free_struct(data);
+	draw_line(data, player, line, FOV_COLOR);
 }
 
 void	drow_to_img(t_data *data)
@@ -95,12 +67,12 @@ void	drow_to_img(t_data *data)
 	t_img	*img;
 
 	img = data->img;
-	img->img = mlx_new_image(img->mlx, WEIGHT, HIEGHT);
+	img->img = mlx_new_image(img->mlx, WIDTH, HEIGHT);
 	img->addr = mlx_get_data_addr(img->img, &img->bit_img, \
 	&img->d_size, &img->endian);
-	draw(data);
+	get_player_possition(data);
+	draw_3d(data);
+	if (data->view.view_2d)
+		draw_map_2d(data);
 	mlx_put_image_to_window(img->mlx, img->win, img->img, 0, 0);
 }
-
-//draw_player(data, (double)data->player.init_y_player,
-//(double)data->player.init_x_player); 

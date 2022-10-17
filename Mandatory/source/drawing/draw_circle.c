@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 11:28:52 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/11 16:40:59 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/17 05:16:15 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	drow_to_img(t_data *data)
 	t_img	*img;
 
 	img = data->img;
-	img->img = mlx_new_image(img->mlx, WEIGHT, HIEGHT);
+	img->img = mlx_new_image(img->mlx, WIDTH, HEIGHT);
 	img->addr = mlx_get_data_addr(img->img, &img->bit_img, \
 	&img->d_size, &img->endian);
 	get_player_possition(data);

@@ -14,15 +14,13 @@ DRAW_DIR = ./Mandatory/source/drawing
 
 UTIL_DIR = ./Mandatory/source/utils
 
-LIBFT_DIR = ./Mandatory/libft
+LIBFT_DIR = ./libft
 
 PARC_DIR_B = ./bonus/source/parcing
 
 DRAW_DIR_B = ./bonus/source/drawing
 
 UTIL_DIR_B = ./bonus/source/utils
-
-LIBFT_DIR_B = ./bonus/libft
 
 ########################
 
@@ -40,11 +38,11 @@ OBJS_B = $(SRCS_BONUS:%.c=%.o)
 all: $(NAME)
 
 _libft :
-	@ make bonus -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR)
 
 $(NAME) : $(OBJS) _libft
 	@rm -rf $(OBJS_B) $(NAME_B)
-	@make fclean -C $(LIBFT_DIR_B)
+	@make bonus -C $(LIBFT_DIR)
 	@$(CC)  $(CFLAGS) $(OBJS) $(LIBFT_DIR)/libft.a -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 	@printf "\x1b[32m  ✅     Make successfully    💯 ✅\033[0m\n"
 
@@ -53,9 +51,8 @@ $(NAME) : $(OBJS) _libft
 
 bonus: $(OBJS_B)
 	@rm -rf $(OBJS) $(NAME)
-	#@make fclean -C $(LIBFT_DIR)
-	@ make bonus -C $(LIBFT_DIR_B)
-	@$(CC)  $(CFLAGS) $(OBJS_B) $(LIBFT_DIR_B)/libft.a -lmlx -framework OpenGL -framework AppKit -o $(NAME_B)
+	@ make bonus -C $(LIBFT_DIR)
+	@$(CC)  $(CFLAGS) $(OBJS_B) $(LIBFT_DIR)/libft.a -lmlx -framework OpenGL -framework AppKit -o $(NAME_B)
 	@printf "\x1b[32m  ✅     Make Bonus successfully    💯 ✅\033[0m\n"
 
 %.o:%.c $(SRCS_BONUS)
@@ -63,7 +60,7 @@ bonus: $(OBJS_B)
 
 clean : 
 	@rm -rf $(OBJS) $(OBJS_B)
-	@make fclean -C $(LIBFT_DIR_B)
+	@make fclean -C $(LIBFT_DIR)
 
 fclean : clean
 	@rm -rf $(NAME) $(NAME_B)

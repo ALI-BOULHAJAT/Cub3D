@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 19:45:58 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/11 17:44:19 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:18:33 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ int	ft_check_wall(t_data *data, double x_plus, double y_plus)
 		return (0);
 	if ((data->map[(int)next_point.x][(int)next_point.y]) == '3' \
 	&& (data->map[(int)player.x][(int)player.y]) == '2')
+		return (0);
+	if (((data->map[(int)next_point.x][(int)next_point.y]) == '3' \
+	|| (data->map[(int)next_point.x][(int)next_point.y]) == '2' ) \
+	&& (char_in_str(PLAYER, data->map[(int)player.x][(int)player.y])))
 		return (0);
 	if (char_in_str(LIMIT, data->map[(int)next_point.x][(int)next_point.y]))
 		return (0);
