@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 11:19:13 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/17 11:22:42 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/18 09:24:58 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_movekey(t_data *data)
 	check_key(data);
 	mlx_clear_window(data->img->mlx, data->img->win);
 	mlx_destroy_image(data->img->mlx, data->img->img);
-	drow_to_img(data);
+	draw_to_img(data);
 	return (0);
 }
 

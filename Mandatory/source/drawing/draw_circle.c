@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 11:28:52 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/17 05:16:15 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/18 09:24:58 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ double	distance_2_point(t_index first, t_index last)
 	return (sqrt (pow((last.x - first.x), 2) + pow((last.y - first.y), 2)));
 }
 
-void	drow_to_img(t_data *data)
+void	draw_to_img(t_data *data)
 {
 	t_img	*img;
 

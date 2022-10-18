@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:33 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/17 11:26:18 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/18 07:35:54 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ void	else_if(t_data *data, char *line, int fd, int type)
 {
 	if (type == WE && fd > 0)
 	{
-		pre_storage_texture(data, line, &data->texture.west);
-		data->texture.b_west = opening_texture(data, \
-		line, &data->texture.w_size);
+		pre_storage_texture(data, line, &data->texture.west.path);
+		data->texture.west.xpm_array = opening_texture(data, \
+		line, &data->texture.west.tex_size);
 	}
 	else if (type == EA && fd > 0)
 	{
-		pre_storage_texture(data, line, &data->texture.east);
-		data->texture.b_east = opening_texture(data, line, \
-		&data->texture.e_size);
+		pre_storage_texture(data, line, &data->texture.east.path);
+		data->texture.east.xpm_array = opening_texture(data, line, \
+		&data->texture.east.tex_size);
 	}
 	else if (type == F)
 		storage_color(data, line, &data->texture.floor, F);
@@ -67,15 +67,15 @@ void	texture_to_data(t_data *data, char *line, int size, int type)
 	fd = open(line, O_RDONLY);
 	if (type == NO && fd > 0)
 	{
-		pre_storage_texture(data, line, &data->texture.north);
-		data->texture.b_north = opening_texture(data, \
-		line, &data->texture.n_size);
+		pre_storage_texture(data, line, &data->texture.north.path);
+		data->texture.north.xpm_array = opening_texture(data, \
+		line, &data->texture.north.tex_size);
 	}
 	else if (type == SO && fd > 0)
 	{
-		pre_storage_texture(data, line, &data->texture.south);
-		data->texture.b_south = opening_texture(data, line, \
-		&data->texture.s_size);
+		pre_storage_texture(data, line, &data->texture.south.path);
+		data->texture.south.xpm_array = opening_texture(data, line, \
+		&data->texture.south.tex_size);
 	}
 	else
 		else_if(data, line, fd, type);

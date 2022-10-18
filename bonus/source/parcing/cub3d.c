@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:46:36 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/17 11:26:24 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/18 09:24:58 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	main(int ac, char **av)
 	}
 	else
 	{
-		drow_to_img(&data);
+		draw_to_img(&data);
 		ft_hook(&data);
 	}
 	return (0);

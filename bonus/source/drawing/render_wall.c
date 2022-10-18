@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 11:02:05 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/17 11:22:25 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/18 07:31:35 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,25 @@
 int	*get_texture_side(t_data *data)
 {
 	if (data->ray.horizontal_best == 1 && data->ray.ray_face.up)
-		return (data->texture.b_north);
+		return (data->texture.north.xpm_array);
 	if (data->ray.horizontal_best == 1 && data->ray.ray_face.down)
-		return (data->texture.b_south);
+		return (data->texture.south.xpm_array);
 	if (data->ray.horizontal_best == 0 && data->ray.ray_face.right)
-		return (data->texture.b_east);
+		return (data->texture.east.xpm_array);
 	else
-		return (data->texture.b_west);
+		return (data->texture.west.xpm_array);
 }
 
 t_index_int	get_texture_size(t_data *data)
 {
 	if (data->ray.horizontal_best == 1 && data->ray.ray_face.up)
-		return (data->texture.n_size);
+		return (data->texture.north.tex_size);
 	if (data->ray.horizontal_best == 1 && data->ray.ray_face.down)
-		return (data->texture.s_size);
+		return (data->texture.south.tex_size);
 	if (data->ray.horizontal_best == 0 && data->ray.ray_face.right)
-		return (data->texture.e_size);
+		return (data->texture.east.tex_size);
 	else
-		return (data->texture.w_size);
+		return (data->texture.west.tex_size);
 }
 
 int	rendering_texcolor(t_data *data, int tex_x, t_index ray)

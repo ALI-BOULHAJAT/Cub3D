@@ -6,13 +6,22 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:42:34 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/11 17:26:56 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/18 12:30:08 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void	pre_key_press(t_data *data, int key)
+int	ft_movekey(t_data *data)
+{
+	check_key(data);
+	mlx_clear_window(data->img->mlx, data->img->win);
+	mlx_destroy_image(data->img->mlx, data->img->img);
+	draw_to_img(data);
+	return (0);
+}
+
+int	ft_key_press(int key, t_data *data)
 {
 	if (key == 13)
 		data->my_hook.key_w = 1;
@@ -26,30 +35,6 @@ void	pre_key_press(t_data *data, int key)
 		data->my_hook.key_east = 1;
 	if (key == 123)
 		data->my_hook.key_west = 1;
-	if (key == 84)
-	{
-		data->view.view_2d = 1;
-		data->view.view_3d = 0;
-	}
-}
-
-int	ft_movekey(t_data *data)
-{
-	check_key(data);
-	mlx_clear_window(data->img->mlx, data->img->win);
-	mlx_destroy_image(data->img->mlx, data->img->img);
-	drow_to_img(data);
-	return (0);
-}
-
-int	ft_key_press(int key, t_data *data)
-{
-	pre_key_press(data, key);
-	if (key == 85)
-	{
-		data->view.view_2d = 0;
-		data->view.view_3d = 1;
-	}
 	if (key == 53)
 	{
 		mlx_destroy_window(data->img->mlx, data->img->win);

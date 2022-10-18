@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:42:34 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/12 14:15:54 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/18 09:30:23 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void	pre_key_press(t_data *data, int key)
 		data->my_hook.key_west = 1;
 	if (key == 84)
 	{
-		if (data->view.view_2d == 0)
-			data->view.view_2d = 1;
+		if (data->player.view_2d)
+			data->player.view_2d = 0;
 		else
-			data->view.view_2d = 0;
+			data->player.view_2d = 1;
 	}
 }
 
@@ -76,7 +76,7 @@ int	ft_zoom(int mouse, int x, int y, t_data *data)
 	}
 	mlx_clear_window(data->img->mlx, data->img->win);
 	mlx_destroy_image(data->img->mlx, data->img->img);
-	drow_to_img(data);
+	draw_to_img(data);
 	return (0);
 }
 

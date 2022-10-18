@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:58:17 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/17 07:23:42 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/18 12:31:45 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,36 +63,32 @@ typedef struct s_player
 	double	init_y_player;
 	double	player_x;
 	double	player_y;
-	int		to_north;
-	int		to_south;
-	int		to_east;
-	int		to_west;
 	double	alpha;
 	t_index	mouve;
 	char	face;
 }	t_player;
 
+typedef struct s_var_texture
+{
+	char		*path;
+	int			*xpm_array;
+	t_index_int	tex_size;
+
+}	t_var_texture;
+
 typedef struct s_texture
 {
-	char		*north;
-	char		*south;
-	char		*east;
-	char		*west;
-	int			check;
-	t_index_int	map_size;
-	int			is_empty_line;
-	int			read_in_map;
-	int			zoom;
-	t_color		floor;
-	t_color		ceilling;
-	int			*b_north;
-	int			*b_south;
-	int			*b_east;
-	int			*b_west;
-	t_index_int	n_size;
-	t_index_int	s_size;
-	t_index_int	e_size;
-	t_index_int	w_size;
+	t_var_texture	north;
+	t_var_texture	south;
+	t_var_texture	east;
+	t_var_texture	west;
+	int				check;
+	t_index_int		map_size;
+	int				is_empty_line;
+	int				read_in_map;
+	int				zoom;
+	t_color			floor;
+	t_color			ceilling;
 
 }	t_texture;
 
@@ -102,22 +98,14 @@ typedef struct s_ray
 	int		found_h_wall;
 	int		found_v_wall;
 	int		horizontal_best;
-	int		v_is_best;
-	int		h_is_best;
 	t_index	vertical_touch;
 	t_index	horizontal_touch;
 	double	angle_ray;
-	double	first_x_intersection[2];
-	double	x_intersection_step[2];
-	double	first_y_intersection[2];
-	double	y_intersection_step[2];
 	double	wall_height;
 }	t_ray;
 
 typedef struct s_hook
 {
-	int	key_north;
-	int	key_south;
 	int	key_east;
 	int	key_west;
 	int	key_w;
@@ -126,16 +114,9 @@ typedef struct s_hook
 	int	key_a;
 }	t_hook;
 
-typedef struct s_view
-{
-	int	view_2d;
-	int	view_3d;
-}	t_view;
-
 typedef struct s_data
 {
 	t_texture	texture;
-	t_view		view;
 	t_player	player;
 	t_img		*img;
 	char		**map;

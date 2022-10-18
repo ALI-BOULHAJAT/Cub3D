@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/17 07:23:01 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/18 09:24:58 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		ft_close_x(t_data *data);
 void	ft_hook(t_data *data);
 int		ft_movekey(t_data *data);
 void	drawing(t_data *data);
-void	drow_to_img(t_data *data);
+void	draw_to_img(t_data *data);
 void	ft_put_pixel(int x, int y, t_data *data, int color);
 void	draw_circle(t_data *data);
 void	check_key(t_data *data);

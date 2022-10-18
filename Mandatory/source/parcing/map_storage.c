@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:50:06 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/17 05:07:55 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/18 07:23:30 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	check_texture_done(t_data *data)
 	t_texture	value;
 
 	value = data->texture;
-	if ((!value.east || !value.north || !value.south \
-	|| !value.west || value.ceilling.r == -1 || value.floor.r == -1) \
+	if ((!value.east.path || !value.north.path || !value.south.path \
+	|| !value.west.path || value.ceilling.r == -1 || value.floor.r == -1) \
 	&& !data->error)
 	{
 		data->error = ft_strdup("error: texture no complete");

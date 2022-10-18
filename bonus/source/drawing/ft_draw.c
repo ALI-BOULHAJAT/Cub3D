@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:18:25 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/17 11:17:55 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/18 09:29:41 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	draw_map_2d(t_data *data)
 	draw_line(data, player, line, FOV_COLOR);
 }
 
-void	drow_to_img(t_data *data)
+void	draw_to_img(t_data *data)
 {
 	t_img	*img;
 
@@ -72,7 +72,7 @@ void	drow_to_img(t_data *data)
 	&img->d_size, &img->endian);
 	get_player_possition(data);
 	draw_3d(data);
-	if (data->view.view_2d)
+	if (data->player.view_2d)
 		draw_map_2d(data);
 	mlx_put_image_to_window(img->mlx, img->win, img->img, 0, 0);
 }
