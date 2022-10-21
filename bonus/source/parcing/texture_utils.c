@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:33 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/18 07:35:54 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/20 05:24:48 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ void	else_if(t_data *data, char *line, int fd, int type)
 		pre_storage_texture(data, line, &data->texture.east.path);
 		data->texture.east.xpm_array = opening_texture(data, line, \
 		&data->texture.east.tex_size);
+	}
+	else if (type == D && fd > 0)
+	{
+		pre_storage_texture(data, line, &data->texture.door.path);
+		data->texture.door.xpm_array = opening_texture(data, line, \
+		&data->texture.door.tex_size);
 	}
 	else if (type == F)
 		storage_color(data, line, &data->texture.floor, F);
@@ -99,6 +105,8 @@ void	texture_storage(t_data *data, char *line)
 		texture_to_data(data, line, 2, F);
 	else if (!ft_strncmp(line, "C ", 2))
 		texture_to_data(data, line, 2, C);
+	else if (!ft_strncmp(line, "D ", 2))
+		texture_to_data(data, line, 2, D);
 	else if (!data->error)
 		data->error = ft_strdup("error: texture no complete");
 }

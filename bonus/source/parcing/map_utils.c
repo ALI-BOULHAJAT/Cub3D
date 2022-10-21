@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 19:32:01 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/11 17:45:25 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/20 05:29:54 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ void	ft_check_map_size(t_data *data, t_index_int count)
 {
 	if (count.x == 0)
 		data->error = ft_strdup("Empty file");
-	else if (count.x < 6)
+	else if (count.x < 7)
 		data->error = ft_strdup("No map");
 	else
 	{
-		data->texture.map_size.x = count.x - 6;
+		data->texture.map_size.x = count.x - 7;
 		data->texture.map_size.y = count.y;
 	}
 }

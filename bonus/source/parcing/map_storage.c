@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:50:06 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/18 07:32:13 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/21 08:30:14 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	check_texture_done(t_data *data)
 
 	value = data->texture;
 	if ((!value.east.path || !value.north.path || !value.south.path \
-	|| !value.west.path || value.ceilling.r == -1 || value.floor.r == -1) \
+	|| !value.west.path || !value.door.path || value.ceilling.r == -1 \
+	|| value.floor.r == -1) \
 	&& !data->error)
 	{
 		data->error = ft_strdup("error: texture no complete");
@@ -32,7 +33,7 @@ void	pre_while(t_data *data, char *line, int *index, int *i_map)
 {
 	if (!empty_line(line) || data->texture.read_in_map == 1)
 	{
-		if ((*index) < 6 && !data->error)
+		if ((*index) < 7 && !data->error)
 		{
 			texture_storage(data, line);
 			(*index)++;

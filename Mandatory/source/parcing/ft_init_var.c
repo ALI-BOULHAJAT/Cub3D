@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:51:32 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/18 12:32:20 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/20 23:48:28 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	init_struct(t_data *data)
 	data->texture.is_empty_line = 0;
 	data->img->d_size = 0;
 	data->img->endian = 0;
-	data->texture.zoom = 64;
+	data->texture.zoom = 32;
 	data->player.player_x = 0;
 	data->player.player_y = 0;
 	init_color(data->texture.floor);

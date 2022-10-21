@@ -6,14 +6,16 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 11:02:05 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/18 07:31:35 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/21 11:44:30 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d_bonus.h"
 
-int	*get_texture_side(t_data *data)
+int	*get_texture_side(t_data *data, char check)
 {
+	if (check == 'D')
+		return (data->texture.door.xpm_array);
 	if (data->ray.horizontal_best == 1 && data->ray.ray_face.up)
 		return (data->texture.north.xpm_array);
 	if (data->ray.horizontal_best == 1 && data->ray.ray_face.down)
@@ -24,8 +26,10 @@ int	*get_texture_side(t_data *data)
 		return (data->texture.west.xpm_array);
 }
 
-t_index_int	get_texture_size(t_data *data)
+t_index_int	get_texture_size(t_data *data, char check)
 {
+	if (check == 'D')
+		return (data->texture.door.tex_size);
 	if (data->ray.horizontal_best == 1 && data->ray.ray_face.up)
 		return (data->texture.north.tex_size);
 	if (data->ray.horizontal_best == 1 && data->ray.ray_face.down)
@@ -36,35 +40,40 @@ t_index_int	get_texture_size(t_data *data)
 		return (data->texture.west.tex_size);
 }
 
-int	rendering_texcolor(t_data *data, int tex_x, t_index ray)
+int	rendering_texcolor(t_data *data, int tex_x, t_index ray, char check)
 {
 	t_index		tex;
-	t_index_int	i_tex;
 	t_index_int	texture_size;
-	double		zoom_factor;
 	int			*side;
+	double		height;
+	int			check_best;
 
-	side = get_texture_side(data);
-	texture_size = get_texture_size(data);
-	zoom_factor = (double)texture_size.y / data->ray.wall_height;
-	tex.x = tex_x + ((data->ray.wall_height / 2) - (HEIGHT / 2));
+	if (check == 'D')
+		check_best = data->ray.door.horizontal_best;
+	else
+		check_best = data->ray.horizontal_best;
+	side = get_texture_side(data, check);
+	texture_size = get_texture_size(data, check);
+	if (check == 'D')
+		height = data->ray.door_height;
+	else
+		height = data->ray.wall_height;
+	tex.x = tex_x + ((height / 2) - (HEIGHT / 2));
 	if (tex.x < 0)
 		tex.x = 0;
-	tex.x *= zoom_factor;
+	tex.x *= (double)texture_size.y / height;
 	tex.x = floor(tex.x);
 	tex.x *= texture_size.x;
-	tex.y = ray.x - data->player.mouve.x;
-	if (data->ray.horizontal_best == 0)
-		tex.y = ray.y - data->player.mouve.y;
+	tex.y = ray.x;
+	if (check_best == 0)
+		tex.y = ray.y;
 	tex.y /= data->texture.zoom;
 	tex.y -= floor(tex.y);
 	tex.y *= texture_size.x;
-	i_tex.x = (int)tex.x;
-	i_tex.y = (int)tex.y;
-	return (side[i_tex.x + i_tex.y]);
+	return (side[(int)tex.x + (int)tex.y]);
 }
 
-void	draw_my_wall(t_data *data, double wall_height, int ray_id, t_index ray)
+void	draw_my_wall(t_data *data, double wall_height, t_index ray, char check)
 {
 	t_index	last;
 	t_index	first;
@@ -78,13 +87,16 @@ void	draw_my_wall(t_data *data, double wall_height, int ray_id, t_index ray)
 		last.x = HEIGHT;
 	while (first.x <= last.x)
 	{
-		color = rendering_texcolor(data, first.x, ray);
-		ft_put_pixel(ray_id, first.x, data, color);
+		color = rendering_texcolor(data, first.x, ray, check);
+		if (check == 'D' && color == 0)
+			;
+		else
+			ft_put_pixel(ray.id, first.x, data, color);
 		first.x++;
 	}
 }
 
-void	draw_wall(t_data *data, double ray_distance, int ray_id, t_index ray)
+void	draw_wall(t_data *data, double ray_distance, t_index ray, char check)
 {
 	double	wall_hight;
 	double	distance_pr_pl;
@@ -93,8 +105,11 @@ void	draw_wall(t_data *data, double ray_distance, int ray_id, t_index ray)
 	ray_distance = ray_distance * \
 	(cos(data->ray.angle_ray - data->player.alpha));
 	wall_hight = (data->texture.zoom / (ray_distance)) * distance_pr_pl;
-	data->ray.wall_height = wall_hight;
+	if (check == 'W')
+		data->ray.wall_height = wall_hight;
+	else
+		data->ray.door_height = wall_hight;
 	if (wall_hight > HEIGHT)
 		wall_hight = HEIGHT;
-	draw_my_wall(data, wall_hight, ray_id, ray);
+	draw_my_wall(data, wall_hight, ray, check);
 }

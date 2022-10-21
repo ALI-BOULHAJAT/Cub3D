@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:58:17 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/18 12:33:37 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/21 11:45:48 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,14 @@ typedef struct s_index
 {
 	double	x;
 	double	y;
+	int		id;
 }	t_index;
+
+typedef struct s_distance
+{
+	double	wall;
+	double	door;
+}	t_distance;
 
 typedef struct s_index_int
 {
@@ -83,6 +90,7 @@ typedef struct s_texture
 	t_var_texture	south;
 	t_var_texture	east;
 	t_var_texture	west;
+	t_var_texture	door;
 	int				check;
 	t_index_int		map_size;
 	int				is_empty_line;
@@ -92,6 +100,17 @@ typedef struct s_texture
 	t_color			ceilling;
 
 }	t_texture;
+
+typedef struct s_door
+{
+	int				found_h;
+	int				found_v;
+	int				horizontal_best;
+	t_index			vertical_touch;
+	t_index			horizontal_touch;
+	double			door_height;
+	struct s_door	*next;
+}	t_door;
 
 typedef struct s_ray
 {
@@ -103,6 +122,8 @@ typedef struct s_ray
 	t_index	horizontal_touch;
 	double	angle_ray;
 	double	wall_height;
+	double	door_height;
+	t_door	door;
 }	t_ray;
 
 typedef struct s_hook

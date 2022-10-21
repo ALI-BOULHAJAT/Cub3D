@@ -6,13 +6,13 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 15:04:42 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/09/11 17:44:09 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/21 09:20:16 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d_bonus.h"
 
-int	ft_is_wall(t_data *data, double x, double y)
+int	ft_is_wall_door(t_data *data, double x, double y)
 {
 	double		zoom;
 	int			line;
@@ -27,21 +27,30 @@ int	ft_is_wall(t_data *data, double x, double y)
 	&& data->map[(int)(x / zoom)][(int)(y / zoom)] \
 	&& char_in_str(LIMIT, data->map[(int)(x / zoom)][(int)(y / zoom)]))
 		return (1);
+	if (char_in_str(DOOR, data->map[(int)(x / zoom)][(int)(y / zoom)]))
+		return (2);
 	return (0);
 }
 
 void	while_horizontal(t_data *data, t_index inter, t_index step)
 {
 	double		tmp;
-	double		zoom;
+	int			check;
 
-	zoom = data->texture.zoom;
+	check = 0;
 	while (1)
 	{
 		tmp = inter.y;
 		if (data->ray.ray_face.up)
 			tmp -= 1;
-		if (ft_is_wall(data, tmp, inter.x))
+		if (ft_is_wall_door(data, tmp, inter.x) == 2 && !check)
+		{
+			data->ray.door.found_h = 1;
+			data->ray.door.horizontal_touch.x = inter.x;
+			data->ray.door.horizontal_touch.y = inter.y;
+			check = 1;
+		}
+		if (ft_is_wall_door(data, tmp, inter.x) == 1)
 		{
 			data->ray.found_h_wall = 1;
 			data->ray.horizontal_touch.x = inter.x;
@@ -59,15 +68,22 @@ void	while_horizontal(t_data *data, t_index inter, t_index step)
 void	while_vertical(t_data *data, t_index inter, t_index step)
 {
 	double		tmp;
-	double		zoom;
+	int			check;
 
-	zoom = data->texture.zoom;
+	check = 0;
 	while (1)
 	{
 		tmp = inter.x;
 		if (data->ray.ray_face.left)
 			tmp -= 1;
-		if (ft_is_wall(data, inter.y, tmp))
+		if (ft_is_wall_door(data, inter.y, tmp) == 2 && !check)
+		{
+			data->ray.door.found_v = 1;
+			data->ray.door.vertical_touch.x = inter.x;
+			data->ray.door.vertical_touch.y = inter.y;
+			check = 1;
+		}
+		if (ft_is_wall_door(data, inter.y, tmp) == 1)
 		{
 			data->ray.found_v_wall = 1;
 			data->ray.vertical_touch.x = inter.x;
