@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calcul_ray.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbenbajj <mbenbajj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 15:04:42 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/21 09:20:16 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/22 22:45:09 by mbenbajj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,13 @@ void	while_horizontal(t_data *data, t_index inter, t_index step)
 		tmp = inter.y;
 		if (data->ray.ray_face.up)
 			tmp -= 1;
-		if (ft_is_wall_door(data, tmp, inter.x) == 2 && !check)
+		if (ft_is_wall_door(data, tmp, inter.x) == 2)
 		{
 			data->ray.door.found_h = 1;
 			data->ray.door.horizontal_touch.x = inter.x;
 			data->ray.door.horizontal_touch.y = inter.y;
 			check = 1;
+			add_front(&data->lst_door, lst_new(1, inter));
 		}
 		if (ft_is_wall_door(data, tmp, inter.x) == 1)
 		{
@@ -76,12 +77,13 @@ void	while_vertical(t_data *data, t_index inter, t_index step)
 		tmp = inter.x;
 		if (data->ray.ray_face.left)
 			tmp -= 1;
-		if (ft_is_wall_door(data, inter.y, tmp) == 2 && !check)
+		if (ft_is_wall_door(data, inter.y, tmp) == 2)
 		{
 			data->ray.door.found_v = 1;
 			data->ray.door.vertical_touch.x = inter.x;
 			data->ray.door.vertical_touch.y = inter.y;
 			check = 1;
+			add_front(&data->lst_door, lst_new(2, inter));
 		}
 		if (ft_is_wall_door(data, inter.y, tmp) == 1)
 		{

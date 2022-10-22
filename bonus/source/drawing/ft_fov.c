@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fov.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbenbajj <mbenbajj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 09:52:43 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/21 11:39:41 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/22 19:44:59 by mbenbajj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	draw_3d(t_data *data)
 	color_converter(&data->texture.ceilling));
 	while (index < WIDTH)
 	{
+		data->lst_door = (t_door *)ft_calloc(1, sizeof(t_door));
 		data->ray.door.found_h = 0;
 		data->ray.door.found_v = 0;
 		facing_ray(data);
@@ -76,11 +77,21 @@ void	draw_3d(t_data *data)
 		wall.id = index;
 		door.id = index;
 		draw_wall(data, ray_distance.wall, wall, 'W');
-		if ((data->ray.door.found_h || data->ray.door.found_v) \
-		&& (ray_distance.door < ray_distance.wall))
+		if ((data->ray.door.found_h || data->ray.door.found_v) && (ray_distance.door < ray_distance.wall))
 			draw_wall(data, ray_distance.door, door, 'D');
 		data->ray.angle_ray += ((60 * (M_PI / 180)) / WIDTH);
 		index++;
+		
+		t_door *head = data->lst_door;
+		
+		while (head->next)
+		{
+			// puts("Face : 	Side	X	Y\n");
+			printf("H : %d	-	x : %f	,	y : %f\nV : %d	-	x : %f	,	y : %f\n", \
+					head->found_h, head->horizontal_touch.x, head->horizontal_touch.y, \
+					head->found_v, head->vertical_touch.x, head->vertical_touch.y);
+			head = head->next;
+		}
 	}
 }
 

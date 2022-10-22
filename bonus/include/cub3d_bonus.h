@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbenbajj <mbenbajj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/21 06:28:20 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/22 16:32:55 by mbenbajj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,9 @@ t_color *variable, int type);
 void		draw_wall(t_data *data, double ray_distance, \
 t_index ray, char check);
 int			color_converter(t_color *color);
+
+//	*******	Casting Utils : 
+t_door	*lst_new(int found, t_index inter);
+void	add_front(t_door **lst, t_door *new);
 
 #endif
