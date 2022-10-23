@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calcul_ray.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbenbajj <mbenbajj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 15:04:42 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/23 03:31:45 by mbenbajj         ###   ########.fr       */
+/*   Updated: 2022/10/23 06:17:47 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ int	ft_is_wall_door(t_data *data, double x, double y)
 void	while_horizontal(t_data *data, t_index inter, t_index step)
 {
 	double		tmp;
-	int check = 0;
-
 
 	while (1)
 	{
@@ -49,7 +47,6 @@ void	while_horizontal(t_data *data, t_index inter, t_index step)
 			data->ray.door.horizontal_touch.x = inter.x;
 			data->ray.door.horizontal_touch.y = inter.y;
 			add_front(&data->lst_door, lst_new(1, inter));
-			check = 1;
 		}
 		if (ft_is_wall_door(data, tmp, inter.x) == 1)
 		{
@@ -59,17 +56,13 @@ void	while_horizontal(t_data *data, t_index inter, t_index step)
 			break ;
 		}
 		else
-		{
-			inter.x += step.x;
-			inter.y += step.y;
-		}
+			inter = add_step(inter, step);
 	}
 }
 
 void	while_vertical(t_data *data, t_index inter, t_index step)
 {
 	double		tmp;
-	int check = 0;
 
 	while (1)
 	{
@@ -82,7 +75,6 @@ void	while_vertical(t_data *data, t_index inter, t_index step)
 			data->ray.door.vertical_touch.x = inter.x;
 			data->ray.door.vertical_touch.y = inter.y;
 			add_front(&data->lst_door, lst_new(2, inter));
-			check = 1;
 		}
 		if (ft_is_wall_door(data, inter.y, tmp) == 1)
 		{
@@ -92,10 +84,7 @@ void	while_vertical(t_data *data, t_index inter, t_index step)
 			break ;
 		}
 		else
-		{
-			inter.x += step.x;
-			inter.y += step.y;
-		}
+			inter = add_step(inter, step);
 	}
 }
 

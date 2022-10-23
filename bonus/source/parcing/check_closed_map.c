@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 10:57:52 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/17 06:03:30 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/23 06:54:32 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,34 +66,27 @@ void	check_player(t_data *data, char **map, int x, int y)
 	check_v_wall(data, map, x, y);
 }
 
+void	check_door(t_data *data, char **map, int x, int y)
+{
+	if (map[x - 1][y] == '1' && map[x + 1][y] == '1')
+		return ;
+	else if (map[x][y - 1] == '1' && map[x][y - 1] == '1')
+		return ;
+	else
+		data->error = ft_strdup("no wall with the door");
+}
+
 void	while_closed(t_data *data, char **map, int x, int *y)
 {
 	if (char_in_str(WHITE_SPACE, map[x][*y]))
 		data->error = ft_strdup("error white-space in the map");
 	else if (char_in_str(PLAY_EMPT, map[x][*y]))
 		check_player(data, map, x, *y);
+	else if (char_in_str(DOOR, map[x][*y]))
+		check_door(data, map, x, *y);
 	else if (char_in_str(WALL_SPAC, map[x][*y]))
 		;
 	else if (!data->error)
 		data->error = ft_strdup("invalid caracter in map");
 	(*y)++;
-}
-
-void	close_map(t_data *data)
-{
-	t_index_int	index;
-	char		**map;
-
-	map = data->map;
-	index.x = 0;
-	while (!data->error && map[index.x])
-	{
-		index.y = 0;
-		while (map[index.x][index.y] && !data->error)
-			while_closed(data, map, index.x, &index.y);
-		index.x++;
-	}
-	init_face(data);
-	if (data->player.n_player == 0 && !data->error)
-		data->error = ft_strdup("error : no player");
 }

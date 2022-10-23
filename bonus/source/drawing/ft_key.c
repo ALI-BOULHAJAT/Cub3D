@@ -6,21 +6,16 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 19:45:58 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/19 01:23:38 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/23 13:14:51 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d_bonus.h"
 
-int	ft_check_wall(t_data *data, double x_plus, double y_plus)
+int	if_else(t_data *data, t_index player, t_index next_point)
 {
-	t_index	player;
-	t_index	next_point;
-
-	player.x = data->player.init_x_player + data->player.player_y;
-	player.y = data->player.init_y_player + data->player.player_x;
-	next_point.x = player.x + (x_plus * 2);
-	next_point.y = player.y + (y_plus * 2);
+	if (next_point.y > (ft_strlen(data->map[(int)next_point.x]) - 1))
+		return (0);
 	if ((data->map[(int)next_point.x][(int)next_point.y]) == '2' \
 	&& (data->map[(int)player.x][(int)player.y]) == '3')
 		return (0);
@@ -34,6 +29,22 @@ int	ft_check_wall(t_data *data, double x_plus, double y_plus)
 	if (char_in_str(LIMIT, data->map[(int)next_point.x][(int)next_point.y]))
 		return (0);
 	return (1);
+}
+
+int	ft_check_wall(t_data *data, double x_plus, double y_plus)
+{
+	t_index	player;
+	t_index	next_point;
+
+	player.x = data->player.init_x_player + data->player.player_y;
+	player.y = data->player.init_y_player + data->player.player_x;
+	next_point.x = player.x + x_plus;
+	next_point.y = player.y + y_plus;
+	
+	if (next_point.x >= 0 && next_point.y >= 0)
+		return (if_else(data, player, next_point));
+	else
+		return (0);
 }
 
 void	facing_ray(t_data *data)

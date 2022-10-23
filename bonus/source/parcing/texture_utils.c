@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:33 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/20 05:24:48 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/23 13:20:27 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,28 @@ int	*opening_texture(t_data *data, char *file, t_index_int *size)
 	return (face);
 }
 
+void	if_else2(t_data *data, char *line, int fd, int type)
+{
+	if (type == D2 && fd > 0)
+	{
+		pre_storage_texture(data, line, &data->texture.door[1].path);
+		data->texture.door[1].xpm_array = opening_texture(data, line, \
+		&data->texture.door[1].tex_size);
+	}
+	else if (type == D3 && fd > 0)
+	{
+		pre_storage_texture(data, line, &data->texture.door[2].path);
+		data->texture.door[2].xpm_array = opening_texture(data, line, \
+		&data->texture.door[2].tex_size);
+	}
+	else if (type == F)
+		storage_color(data, line, &data->texture.floor, F);
+	else if (type == C)
+		storage_color(data, line, &data->texture.ceilling, C);
+	else if (!data->error)
+		data->error = ft_strdup("error texture not valid");
+}
+
 void	else_if(t_data *data, char *line, int fd, int type)
 {
 	if (type == WE && fd > 0)
@@ -48,18 +70,14 @@ void	else_if(t_data *data, char *line, int fd, int type)
 		data->texture.east.xpm_array = opening_texture(data, line, \
 		&data->texture.east.tex_size);
 	}
-	else if (type == D && fd > 0)
+	else if (type == D1 && fd > 0)
 	{
-		pre_storage_texture(data, line, &data->texture.door.path);
-		data->texture.door.xpm_array = opening_texture(data, line, \
-		&data->texture.door.tex_size);
+		pre_storage_texture(data, line, &data->texture.door[0].path);
+		data->texture.door[0].xpm_array = opening_texture(data, line, \
+		&data->texture.door[0].tex_size);
 	}
-	else if (type == F)
-		storage_color(data, line, &data->texture.floor, F);
-	else if (type == C)
-		storage_color(data, line, &data->texture.ceilling, C);
-	else if (!data->error)
-		data->error = ft_strdup("error texture not valid");
+	else
+		if_else2(data, line, fd, type);
 }
 
 void	texture_to_data(t_data *data, char *line, int size, int type)
@@ -105,8 +123,12 @@ void	texture_storage(t_data *data, char *line)
 		texture_to_data(data, line, 2, F);
 	else if (!ft_strncmp(line, "C ", 2))
 		texture_to_data(data, line, 2, C);
-	else if (!ft_strncmp(line, "D ", 2))
-		texture_to_data(data, line, 2, D);
+	else if (!ft_strncmp(line, "D1 ", 2))
+		texture_to_data(data, line, 2, D1);
+	else if (!ft_strncmp(line, "D2 ", 2))
+		texture_to_data(data, line, 2, D2);
+	else if (!ft_strncmp(line, "D3 ", 2))
+		texture_to_data(data, line, 2, D3);
 	else if (!data->error)
 		data->error = ft_strdup("error: texture no complete");
 }

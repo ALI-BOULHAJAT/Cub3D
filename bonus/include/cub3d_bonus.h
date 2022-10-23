@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbenbajj <mbenbajj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/23 01:14:19 by mbenbajj         ###   ########.fr       */
+/*   Updated: 2022/10/23 13:08:37 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define ALPHA 0.1
 # define RAY 150
 # define FOV_ANGLE 60
+# define TEXTURE_LINE 9
 
 # define FOV_COLOR 0x977950
 
@@ -54,6 +55,7 @@ int			check_circle(char **map, int x, int y);
 void		init_face(t_data *data);
 int			char_in_str(char *str, char c);
 int			ft_close_x(t_data *data);
+void		while_closed(t_data *data, char **map, int x, int *y);
 
 /////////////  DRAWING ///////////////////////
 
@@ -64,12 +66,12 @@ void		draw_to_img(t_data *data);
 void		ft_put_pixel(int x, int y, t_data *data, int color);
 void		draw_circle(t_data *data);
 void		check_key(t_data *data);
-void		draw_3d(t_data *data);
+void		draw_3d(t_data *data, t_check check);
 void		horizontal_intersection(t_data *data);
 void		vertical_intersection(t_data *data);
 void		draw_line(t_data *data, t_index first, t_index last, int color);
 double		distance_2_point(t_index first, t_index last);
-t_distance	get_distance(t_data *data, t_index *ray, t_index *door);
+t_distance	get_distance(t_data *data, t_index *ray);
 double		normalizeangle(double angle);
 void		facing_ray(t_data *data);
 t_index		player_possition(t_data *data, char zoom, char mouve);
@@ -84,11 +86,16 @@ t_color *variable, int type);
 
 ////// wall////
 void		draw_wall(t_data *data, double ray_distance, \
-t_index ray, char check, t_door *head);
+t_index ray, t_check check);
 int			color_converter(t_color *color);
 
 //	*******	Casting Utils : 
-t_door	*lst_new(int found, t_index inter);
-void	add_front(t_door **lst, t_door *new);
+t_door		*lst_new(int found, t_index inter);
+void		add_front(t_door **lst, t_door *new);
+t_door		*lst_last(t_door **lst);
+void		ft_free_list(t_data *data);
+int			rendering_texcolor(t_data *data, int tex_x, \
+t_index ray, t_check check);
+t_index		add_step(t_index inter, t_index step);
 
 #endif

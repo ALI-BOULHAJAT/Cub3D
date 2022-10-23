@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:46:36 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/21 05:55:50 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/23 10:54:33 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,25 @@
 // 		i++;
 // 	}
 // }
+
+void	close_map(t_data *data)
+{
+	t_index_int	index;
+	char		**map;
+
+	map = data->map;
+	index.x = 0;
+	while (!data->error && map[index.x])
+	{
+		index.y = 0;
+		while (map[index.x][index.y] && !data->error)
+			while_closed(data, map, index.x, &index.y);
+		index.x++;
+	}
+	init_face(data);
+	if (data->player.n_player == 0 && !data->error)
+		data->error = ft_strdup("error : no player");
+}
 
 void	color_data(t_data *data, t_color *data_color, char *color, int type)
 {
@@ -91,6 +110,7 @@ int	main(int ac, char **av)
 		draw_to_img(&data);
 		ft_hook(&data);
 	}
+ 
 	return (0);
 }
 		// system("leaks cub3d");

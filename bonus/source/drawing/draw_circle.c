@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 11:28:52 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/17 11:03:13 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/23 12:57:29 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,23 @@ int	ft_close_x(t_data *data)
 	mlx_destroy_window(data->img->mlx, data->img->win);
 	exit(0);
 	return (0);
+}
+
+t_index	add_step(t_index inter, t_index step)
+{
+	inter.x += step.x;
+	inter.y += step.y;
+	return (inter);
+}
+
+void	ft_free_list(t_data *data)
+{
+	t_door	*tmp;
+
+	while (data->lst_door)
+	{
+		tmp = data->lst_door;
+		data->lst_door = data->lst_door->next;
+		free(tmp);
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbenbajj <mbenbajj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:58:17 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/23 00:30:44 by mbenbajj         ###   ########.fr       */
+/*   Updated: 2022/10/23 12:56:06 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ typedef struct s_index
 	double	y;
 	int		id;
 }	t_index;
+
+typedef struct s_check
+{
+	int	check;
+	int	last;
+}	t_check;
 
 typedef struct s_distance
 {
@@ -90,7 +96,7 @@ typedef struct s_texture
 	t_var_texture	south;
 	t_var_texture	east;
 	t_var_texture	west;
-	t_var_texture	door;
+	t_var_texture	door[3];
 	int				check;
 	t_index_int		map_size;
 	int				is_empty_line;
@@ -146,7 +152,8 @@ typedef struct s_data
 	char		*error;
 	t_hook		my_hook;
 	t_ray		ray;
-	t_door	*lst_door;
+	t_door		*lst_door;
+	t_door		*actual_head;
 }	t_data;
 
 #endif

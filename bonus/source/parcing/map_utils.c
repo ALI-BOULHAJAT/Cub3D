@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 19:32:01 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/20 05:29:54 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/23 09:52:38 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_check_map_size(t_data *data, t_index_int count)
 		data->error = ft_strdup("No map");
 	else
 	{
-		data->texture.map_size.x = count.x - 7;
+		data->texture.map_size.x = count.x - TEXTURE_LINE;
 		data->texture.map_size.y = count.y;
 	}
 }
