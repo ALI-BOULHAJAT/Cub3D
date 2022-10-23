@@ -6,7 +6,7 @@
 /*   By: mbenbajj <mbenbajj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/22 16:32:55 by mbenbajj         ###   ########.fr       */
+/*   Updated: 2022/10/23 01:14:19 by mbenbajj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_color *variable, int type);
 
 ////// wall////
 void		draw_wall(t_data *data, double ray_distance, \
-t_index ray, char check);
+t_index ray, char check, t_door *head);
 int			color_converter(t_color *color);
 
 //	*******	Casting Utils : 

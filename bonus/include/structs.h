@@ -6,7 +6,7 @@
 /*   By: mbenbajj <mbenbajj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:58:17 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/22 16:53:44 by mbenbajj         ###   ########.fr       */
+/*   Updated: 2022/10/23 00:30:44 by mbenbajj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_door
 	int				horizontal_best;
 	t_index			vertical_touch;
 	t_index			horizontal_touch;
+	double			distance;
 	double			door_height;
 	struct s_door	*next;
 }	t_door;

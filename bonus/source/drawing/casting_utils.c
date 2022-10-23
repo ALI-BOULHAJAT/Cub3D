@@ -6,7 +6,7 @@
 /*   By: mbenbajj <mbenbajj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 13:25:07 by mbenbajj          #+#    #+#             */
-/*   Updated: 2022/10/22 16:49:49 by mbenbajj         ###   ########.fr       */
+/*   Updated: 2022/10/23 01:00:33 by mbenbajj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	add_front(t_door **lst, t_door *new)
 {
 	if (!new)
 		return ;
-	if (!(*lst))
-		(*lst) = new;
+	// if (!(*lst))
+	// 	(*lst) = new;
 	else
 	{
 		new->next = (*lst);

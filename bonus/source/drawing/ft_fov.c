@@ -6,7 +6,7 @@
 /*   By: mbenbajj <mbenbajj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 09:52:43 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/22 19:44:59 by mbenbajj         ###   ########.fr       */
+/*   Updated: 2022/10/23 02:04:40 by mbenbajj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_index	player_possition(t_data *data, char zoom, char mouve)
 
 void	draw_3d(t_data *data)
 {
+
 	t_index		player;
 	t_index		wall;
 	t_index		door;
@@ -76,22 +77,50 @@ void	draw_3d(t_data *data)
 		ray_distance = get_distance(data, &wall, &door);
 		wall.id = index;
 		door.id = index;
-		draw_wall(data, ray_distance.wall, wall, 'W');
-		if ((data->ray.door.found_h || data->ray.door.found_v) && (ray_distance.door < ray_distance.wall))
-			draw_wall(data, ray_distance.door, door, 'D');
+		t_door	*head = NULL;
+		
+		draw_wall(data, ray_distance.wall, wall, 'W', head);
+		
+		//	*****
+
+		head = data->lst_door;
+		while (head->next)
+		{
+			if ((head->found_h || head->found_v) && (head->distance < ray_distance.wall))
+			{
+				if (head->found_h)
+				{
+					door.x = head->horizontal_touch.x;
+					door.y = head->horizontal_touch.y;
+					draw_wall(data,	head->distance, door, 'D', head);
+				}
+				else
+				{
+					// printf("-> %f  -> %f \n", head->vertical_touch.x, head->vertical_touch.y);
+					door.x = head->vertical_touch.x;
+					door.y = head->vertical_touch.y;
+					draw_wall(data, head->distance, door, 'D', head);
+				}
+			}
+			head = head->next;
+		}
+		//	*****
+		
+		// if ((data->ray.door.found_h || data->ray.door.found_v) && (ray_distance.door < ray_distance.wall))
+		// 	draw_wall(data, ray_distance.door, door, 'D');
 		data->ray.angle_ray += ((60 * (M_PI / 180)) / WIDTH);
 		index++;
 		
-		t_door *head = data->lst_door;
+		// t_door *head = data->lst_door;
 		
-		while (head->next)
-		{
-			// puts("Face : 	Side	X	Y\n");
-			printf("H : %d	-	x : %f	,	y : %f\nV : %d	-	x : %f	,	y : %f\n", \
-					head->found_h, head->horizontal_touch.x, head->horizontal_touch.y, \
-					head->found_v, head->vertical_touch.x, head->vertical_touch.y);
-			head = head->next;
-		}
+		// while (head->next)
+		// {
+		// 	// puts("Face : 	Side	X	Y\n");
+		// 	printf("H : %d	-	x : %f	,	y : %f\nV : %d	-	x : %f	,	y : %f\n", \
+		// 			head->found_h, head->horizontal_touch.x, head->horizontal_touch.y, \
+		// 			head->found_v, head->vertical_touch.x, head->vertical_touch.y);
+		// 	head = head->next;
+		// }
 	}
 }
 
@@ -171,13 +200,37 @@ double	best_door_distance(t_data *data, t_index *door, t_index player)
 	return (door_distance);
 }
 
+void	door_distance(t_data *data, t_index player)
+{
+	t_door	*head;
+	
+	head = data->lst_door;
+	while (head->next)
+	{
+		if (head->found_h)
+		{
+			head->distance = distance_2_point(player, head->horizontal_touch);
+			head->horizontal_best = 1;
+		}
+		else if (head->found_v)
+		{
+			head->distance = distance_2_point(player, head->vertical_touch);
+			head->horizontal_best = 0;
+		}
+		head = head->next;
+	}
+}
+
+
 t_distance	get_distance(t_data *data, t_index *ray, t_index *door)
 {
 	t_distance	distance;
 	t_index		player;
 
+	(void)door;
 	player = player_possition(data, 'Y', 'N');
 	distance.wall = best_wall_distance(data, ray, player);
-	distance.door = best_door_distance(data, door, player);
+	// distance.door = best_door_distance(data, door, player);
+	door_distance(data, player);
 	return (distance);
 }

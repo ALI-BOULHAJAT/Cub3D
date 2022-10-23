@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_wall.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbenbajj <mbenbajj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 11:02:05 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/21 11:44:30 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/23 01:13:14 by mbenbajj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_index_int	get_texture_size(t_data *data, char check)
 		return (data->texture.west.tex_size);
 }
 
-int	rendering_texcolor(t_data *data, int tex_x, t_index ray, char check)
+int	rendering_texcolor(t_data *data, int tex_x, t_index ray, char check, t_door *head)
 {
 	t_index		tex;
 	t_index_int	texture_size;
@@ -49,7 +49,7 @@ int	rendering_texcolor(t_data *data, int tex_x, t_index ray, char check)
 	int			check_best;
 
 	if (check == 'D')
-		check_best = data->ray.door.horizontal_best;
+		check_best = head->horizontal_best;
 	else
 		check_best = data->ray.horizontal_best;
 	side = get_texture_side(data, check);
@@ -73,7 +73,7 @@ int	rendering_texcolor(t_data *data, int tex_x, t_index ray, char check)
 	return (side[(int)tex.x + (int)tex.y]);
 }
 
-void	draw_my_wall(t_data *data, double wall_height, t_index ray, char check)
+void	draw_my_wall(t_data *data, double wall_height, t_index ray, char check, t_door *head)
 {
 	t_index	last;
 	t_index	first;
@@ -87,7 +87,7 @@ void	draw_my_wall(t_data *data, double wall_height, t_index ray, char check)
 		last.x = HEIGHT;
 	while (first.x <= last.x)
 	{
-		color = rendering_texcolor(data, first.x, ray, check);
+		color = rendering_texcolor(data, first.x, ray, check, head);
 		if (check == 'D' && color == 0)
 			;
 		else
@@ -96,14 +96,13 @@ void	draw_my_wall(t_data *data, double wall_height, t_index ray, char check)
 	}
 }
 
-void	draw_wall(t_data *data, double ray_distance, t_index ray, char check)
+void	draw_wall(t_data *data, double ray_distance, t_index ray, char check, t_door *head)
 {
 	double	wall_hight;
 	double	distance_pr_pl;
 
 	distance_pr_pl = (WIDTH / 2) / tan(30 * (M_PI / 180));
-	ray_distance = ray_distance * \
-	(cos(data->ray.angle_ray - data->player.alpha));
+	ray_distance = ray_distance * (cos(data->ray.angle_ray - data->player.alpha));
 	wall_hight = (data->texture.zoom / (ray_distance)) * distance_pr_pl;
 	if (check == 'W')
 		data->ray.wall_height = wall_hight;
@@ -111,5 +110,5 @@ void	draw_wall(t_data *data, double ray_distance, t_index ray, char check)
 		data->ray.door_height = wall_hight;
 	if (wall_hight > HEIGHT)
 		wall_hight = HEIGHT;
-	draw_my_wall(data, wall_hight, ray, check);
+	draw_my_wall(data, wall_hight, ray, check, head);
 }
