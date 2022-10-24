@@ -1,11 +1,11 @@
 
 
-NO ./texture/wood.xpm
-SO ./texture/wood.xpm
+NO ./texture/wood_eagle/eagle.xpm
+SO ./texture/wood_eagle/wood.xpm
 C 0,204,204
 F 51,102,0
-WE ./texture/wood.xpm
-EA ./texture/eagle.xpm
+WE ./texture/wood_eagle/eagle.xpm
+EA ./texture/wood_eagle/wood.xpm
 
         1111111111111111111111111
         10001000011000000000E0001
