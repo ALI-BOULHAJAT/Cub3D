@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:46:36 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/24 05:59:12 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:25:51 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	read_map(t_data *data, char **av)
 	int		index;
 
 	init_struct(data);
+	if (data->texture.zoom < 1)
+		data->error = ft_strdup("error in zoom value");
 	data->img->mlx = mlx_init();
 	data->img->win = mlx_new_window(data->img->mlx, WIDTH, HEIGHT, "Cub3D");
 	map_size(data, av[1]);
@@ -122,6 +124,7 @@ int	main(int ac, char **av)
 	{
 		printf("\x1b[31m Error \033[0m\n");
 		printf("\x1b[31m🚫 %s 🚫\033[0m\n", data.error);
+		return (1);
 	}
 	else
 	{

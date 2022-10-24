@@ -6,18 +6,22 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:51:32 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/20 23:48:28 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:26:31 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void	init_color(t_color color)
+void	init_color(t_data *data)
 {
-	color.t = -1;
-	color.r = -1;
-	color.g = -1;
-	color.b = -1;
+	data->texture.ceilling.t = -1;
+	data->texture.ceilling.r = -1;
+	data->texture.ceilling.g = -1;
+	data->texture.ceilling.b = -1;
+	data->texture.floor.t = -1;
+	data->texture.floor.r = -1;
+	data->texture.floor.g = -1;
+	data->texture.floor.b = -1;
 }
 
 void	init_face(t_data *data)
@@ -59,8 +63,7 @@ void	init_struct(t_data *data)
 	data->texture.zoom = 32;
 	data->player.player_x = 0;
 	data->player.player_y = 0;
-	init_color(data->texture.floor);
-	init_color(data->texture.ceilling);
+	init_color(data);
 	int_key(data);
 }
 
