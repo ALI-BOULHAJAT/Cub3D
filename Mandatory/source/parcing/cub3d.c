@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:46:36 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/18 12:32:13 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/24 05:59:12 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,11 @@ int	main(int ac, char **av)
 	if (ac != 2)
 	{
 		printf("\x1b[31m Error in arguments \033[0m\n");
+		return (1);
+	}
+	else if (WIDTH > 2880 || HEIGHT > 1550)
+	{
+		printf("\x1b[31m🚫 Error in window size 🚫\033[0m\n");
 		return (1);
 	}
 	else

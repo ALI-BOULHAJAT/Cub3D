@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 11:02:05 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/23 12:53:32 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/24 05:20:07 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,17 @@
 int	*get_texture_side(t_data *data, t_check check)
 {
 	t_door	*last;
+
 	if (check.check == ISDOOR)
 	{
 		last = lst_last(&data->lst_door);
 		if (last)
 		{
-			if ((last->distance / data->texture.zoom) <= 1.5 && check.last == LAST)
+			if ((last->distance / data->texture.zoom) <= 1.5 \
+			&& check.last == LAST)
 				return (data->texture.door[0].xpm_array);
-			else if ((last->distance / data->texture.zoom) <= 2 && check.last == LAST)
+			else if ((last->distance / data->texture.zoom) <= 2 \
+			&& check.last == LAST)
 				return (data->texture.door[1].xpm_array);
 			else
 				return (data->texture.door[2].xpm_array);
@@ -40,15 +43,18 @@ int	*get_texture_side(t_data *data, t_check check)
 
 t_index_int	get_texture_size(t_data *data, t_check check)
 {
-	t_door *last;
+	t_door	*last;
+
 	if (check.check == ISDOOR)
 	{
 		last = lst_last(&data->lst_door);
-		if (last )
+		if (last)
 		{
-			if ((last->distance / data->texture.zoom) <= 1.5 && check.last == LAST)
+			if ((last->distance / data->texture.zoom) <= 1.5 \
+			&& check.last == LAST)
 				return (data->texture.door[0].tex_size);
-			else if ((last->distance / data->texture.zoom) <= 2 && check.last == LAST)
+			else if ((last->distance / data->texture.zoom) <= 2 \
+			&& check.last == LAST)
 				return (data->texture.door[1].tex_size);
 			else
 				return (data->texture.door[2].tex_size);

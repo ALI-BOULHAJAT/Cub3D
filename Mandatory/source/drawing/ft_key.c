@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 19:45:58 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/19 01:23:29 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/24 07:41:21 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	ft_check_wall(t_data *data, double x_plus, double y_plus)
 	player.y = data->player.init_y_player + data->player.player_x;
 	next_point.x = player.x + (1.5 * x_plus);
 	next_point.y = player.y + (1.5 * y_plus);
+	if (next_point.y > (ft_strlen(data->map[(int)next_point.x]) - 1))
+		return (0);
 	if ((data->map[(int)next_point.x][(int)next_point.y]) == '2' \
 	&& (data->map[(int)player.x][(int)player.y]) == '3')
 		return (0);

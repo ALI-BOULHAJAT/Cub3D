@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 09:52:43 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/23 13:09:13 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/24 05:26:43 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,25 +118,5 @@ void	draw_3d(t_data *data, t_check check)
 		ft_free_list(data);
 		data->ray.angle_ray += ((60 * (M_PI / 180)) / WIDTH);
 		index++;
-	}
-}
-
-void	draw_line(t_data *data, t_index first, t_index last, int color)
-{
-	double	i;
-	double	step;
-
-	i = 0;
-	if (fabs(ft_diff(first.x, last.x)) > fabs(ft_diff(first.y, last.y)))
-		step = fabs(ft_diff(first.x, last.x));
-	else
-		step = fabs(ft_diff(first.y, last.y));
-	while (i < step)
-	{
-		if (point_in_circle(data, first.x, first.y))
-			ft_put_pixel(first.x, first.y, data, color);
-		first.x += ft_diff(first.x, last.x) / step;
-		first.y += ft_diff(first.y, last.y) / step;
-		i += 0.1;
 	}
 }

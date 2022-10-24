@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:58:17 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/23 12:56:06 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/24 04:33:28 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,14 @@ typedef struct s_img
 	void	*win;
 
 }	t_img;
+
+typedef struct s_mouse
+{
+	int	sav_x;
+	int	sav_y;
+	int	mouse_press;
+	int	mouse_release;
+}	t_mouse;
 
 typedef struct s_player
 {
@@ -146,6 +154,7 @@ typedef struct s_hook
 typedef struct s_data
 {
 	t_texture	texture;
+	t_mouse		mouse;
 	t_player	player;
 	t_img		*img;
 	char		**map;

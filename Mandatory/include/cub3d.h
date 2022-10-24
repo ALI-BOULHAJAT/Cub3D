@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/18 09:24:58 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/24 06:14:50 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,8 @@
 # define RAY 150
 # define FOV_ANGLE 60
 
-# define FOV_COLOR 0x977950
+// # define FOV_COLOR 0x977950
 
-// FOV_ANGLE 60 * M_PI / 180
 /////////////// PARCING ///////////////////////
 
 void	read_map(t_data *data, char **av);
@@ -60,28 +59,17 @@ int		ft_close_x(t_data *data);
 /////////////  DRAWING ///////////////////////
 
 void	ft_hook(t_data *data);
-int		ft_movekey(t_data *data);
-void	drawing(t_data *data);
 void	draw_to_img(t_data *data);
 void	ft_put_pixel(int x, int y, t_data *data, int color);
-void	draw_circle(t_data *data);
 void	check_key(t_data *data);
 void	draw_3d(t_data *data);
 void	horizontal_intersection(t_data *data);
 void	vertical_intersection(t_data *data);
-void	draw_line(t_data *data, t_index first, t_index last, int color);
 double	distance_2_point(t_index first, t_index last);
 double	get_distance(t_data *data, t_index *ray);
 double	normalizeangle(double angle);
 void	facing_ray(t_data *data);
 t_index	player_possition(t_data *data, char zoom, char mouve);
-int		is_v_wall(t_data *data, double x, double y, t_index step);
-int		ft_is_wall(t_data *data, double x, double y);
-void	draw_circle(t_data *data);
-int		point_in_circle(t_data *data, double y, double x);
-void	get_player_possition(t_data *data);
-
-////// wall////
 void	draw_wall(t_data *data, double ray_distance, int ray_id, t_index ray);
 int		color_converter(t_color *color);
 

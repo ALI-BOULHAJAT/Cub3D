@@ -6,33 +6,37 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:46:36 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/23 10:54:33 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/24 07:42:31 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d_bonus.h"
 
-// void	print_data(t_data data)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	printf("north ->%s\n", data.texture.north);
-// 	printf("east ->%s\n", data.texture.east);
-// 	printf("south ->%s\n", data.texture.south);
-// 	printf("west ->%s\n", data.texture.west);
-// 	printf("floor -> %d,%d,%d,%d\n", data.texture.floor.t,
-// 	data.texture.floor.r, data.texture.floor.g, data.texture.floor.b);
-// 	printf("ceilling -> %d,%d,%d,%d\n",
-// 	data.texture.ceilling.t, data.texture.ceilling.r,
-// 	data.texture.ceilling.g, data.texture.ceilling.b);
-// 	printf("\n\n");
-// 	while (data.map[i])
-// 	{
-// 		printf("%s", data.map[i]);
-// 		i++;
-// 	}
-// }
+void	texture_storage(t_data *data, char *line)
+{
+	while (*line == ' ')
+		line += 1;
+	if (!ft_strncmp(line, "NO ", 3))
+		texture_to_data(data, line, 3, NO);
+	else if (!ft_strncmp(line, "SO ", 3))
+		texture_to_data(data, line, 3, SO);
+	else if (!ft_strncmp(line, "WE ", 3))
+		texture_to_data(data, line, 3, WE);
+	else if (!ft_strncmp(line, "EA ", 3))
+		texture_to_data(data, line, 3, EA);
+	else if (!ft_strncmp(line, "F ", 2))
+		texture_to_data(data, line, 2, F);
+	else if (!ft_strncmp(line, "C ", 2))
+		texture_to_data(data, line, 2, C);
+	else if (!ft_strncmp(line, "D1 ", 2))
+		texture_to_data(data, line, 2, D1);
+	else if (!ft_strncmp(line, "D2 ", 2))
+		texture_to_data(data, line, 2, D2);
+	else if (!ft_strncmp(line, "D3 ", 2))
+		texture_to_data(data, line, 2, D3);
+	else if (!data->error)
+		data->error = ft_strdup("error: texture no complete");
+}
 
 void	close_map(t_data *data)
 {
@@ -95,7 +99,12 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		printf("\x1b[31m Error in arguments \033[0m\n");
+		printf("\x1b[31m🚫 Error in arguments 🚫\033[0m\n");
+		return (1);
+	}
+	else if (WIDTH > 2880 || HEIGHT > 1550)
+	{
+		printf("\x1b[31m🚫 Error in window size 🚫\033[0m\n");
 		return (1);
 	}
 	else
@@ -110,8 +119,5 @@ int	main(int ac, char **av)
 		draw_to_img(&data);
 		ft_hook(&data);
 	}
- 
 	return (0);
 }
-		// system("leaks cub3d");
-		// printf("\ndone\n");

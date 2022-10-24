@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 19:45:58 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/23 13:14:51 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/24 05:26:56 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	ft_check_wall(t_data *data, double x_plus, double y_plus)
 	player.y = data->player.init_y_player + data->player.player_x;
 	next_point.x = player.x + x_plus;
 	next_point.y = player.y + y_plus;
-	
 	if (next_point.x >= 0 && next_point.y >= 0)
 		return (if_else(data, player, next_point));
 	else
@@ -108,32 +107,5 @@ void	movement_key(t_data *data, t_index step)
 			data->player.player_x = data->player.player_x - step.y;
 			data->player.player_y = data->player.player_y + step.x;
 		}
-	}
-}
-
-void	check_key(t_data *data)
-{
-	t_index	step;
-
-	step.x = STEP * cos(data->player.alpha);
-	step.y = STEP * sin(data->player.alpha);
-	movement_key(data, step);
-	if (data->my_hook.key_a == 1)
-	{
-		if (ft_check_wall(data, -step.x, step.y))
-		{
-			data->player.player_x = data->player.player_x + step.y;
-			data->player.player_y = data->player.player_y - step.x;
-		}
-	}
-	if (data->my_hook.key_east == 1)
-	{
-		data->player.alpha += ALPHA;
-		data->player.alpha = normalizeangle(data->player.alpha);
-	}
-	if (data->my_hook.key_west == 1)
-	{
-		data->player.alpha -= ALPHA;
-		data->player.alpha = normalizeangle(data->player.alpha);
 	}
 }

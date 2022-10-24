@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 13:25:07 by mbenbajj          #+#    #+#             */
-/*   Updated: 2022/10/23 12:56:57 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/24 05:26:27 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,15 +107,4 @@ void	door_distance(t_data *data, t_index player)
 		}
 		head = head->next;
 	}
-}
-
-t_distance	get_distance(t_data *data, t_index *ray)
-{
-	t_distance	distance;
-	t_index		player;
-
-	player = player_possition(data, 'Y', 'N');
-	distance.wall = best_wall_distance(data, ray, player);
-	door_distance(data, player);
-	return (distance);
 }

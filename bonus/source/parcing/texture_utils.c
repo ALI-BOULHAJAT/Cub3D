@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:33 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/23 13:20:27 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/24 05:57:50 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,30 +105,4 @@ void	texture_to_data(t_data *data, char *line, int size, int type)
 		else_if(data, line, fd, type);
 	free(line);
 	close(fd);
-}
-
-void	texture_storage(t_data *data, char *line)
-{
-	while (*line == ' ')
-		line += 1;
-	if (!ft_strncmp(line, "NO ", 3))
-		texture_to_data(data, line, 3, NO);
-	else if (!ft_strncmp(line, "SO ", 3))
-		texture_to_data(data, line, 3, SO);
-	else if (!ft_strncmp(line, "WE ", 3))
-		texture_to_data(data, line, 3, WE);
-	else if (!ft_strncmp(line, "EA ", 3))
-		texture_to_data(data, line, 3, EA);
-	else if (!ft_strncmp(line, "F ", 2))
-		texture_to_data(data, line, 2, F);
-	else if (!ft_strncmp(line, "C ", 2))
-		texture_to_data(data, line, 2, C);
-	else if (!ft_strncmp(line, "D1 ", 2))
-		texture_to_data(data, line, 2, D1);
-	else if (!ft_strncmp(line, "D2 ", 2))
-		texture_to_data(data, line, 2, D2);
-	else if (!ft_strncmp(line, "D3 ", 2))
-		texture_to_data(data, line, 2, D3);
-	else if (!data->error)
-		data->error = ft_strdup("error: texture no complete");
 }

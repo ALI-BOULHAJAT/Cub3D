@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:42:34 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/18 09:30:23 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/24 05:27:28 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,14 @@ int	ft_key_release(int key, t_data *data)
 	return (0);
 }
 
-int	ft_zoom(int mouse, int x, int y, t_data *data)
+int	ft_mouse_press(int mouse, int x, int y, t_data *data)
 {
-	(void)x;
-	(void)y;
-	if (mouse == 5)
-		data->texture.zoom += 1;
-	if (mouse == 4)
+	if (mouse == 1)
 	{
-		if (data->texture.zoom > 1)
-			data->texture.zoom -= 1;
+		data->mouse.mouse_press = 1;
+		data->mouse.mouse_release = 0;
+		data->mouse.sav_x = x;
+		data->mouse.sav_y = y;
 	}
 	mlx_clear_window(data->img->mlx, data->img->win);
 	mlx_destroy_image(data->img->mlx, data->img->img);
@@ -83,9 +81,11 @@ int	ft_zoom(int mouse, int x, int y, t_data *data)
 void	ft_hook(t_data *data)
 {
 	mlx_hook(data->img->win, 2, 0, ft_key_press, data);
+	mlx_hook(data->img->win, 4, 0, ft_mouse_press, data);
+	mlx_hook(data->img->win, 5, 0, ft_mouse_release, data);
+	mlx_hook(data->img->win, 6, 0, mouvment_mouse, data);
 	mlx_hook(data->img->win, 3, 0, ft_key_release, data);
 	mlx_loop_hook(data->img->mlx, ft_movekey, data);
 	mlx_hook(data->img->win, 17, 0, ft_close_x, data);
-	mlx_hook(data->img->win, 4, 0, ft_zoom, data);
 	mlx_loop(data->img->mlx);
 }

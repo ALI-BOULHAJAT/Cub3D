@@ -6,7 +6,7 @@
 /*   By: aboulhaj <aboulhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 10:32:35 by aboulhaj          #+#    #+#             */
-/*   Updated: 2022/10/23 13:08:37 by aboulhaj         ###   ########.fr       */
+/*   Updated: 2022/10/24 09:14:53 by aboulhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define CEILLING 0
 # define WIDTH 1600
 # define HEIGHT 1200
-# define STEP 0.2
+# define STEP 0.3
 # define ALPHA 0.1
 # define RAY 150
 # define FOV_ANGLE 60
@@ -56,6 +56,7 @@ void		init_face(t_data *data);
 int			char_in_str(char *str, char c);
 int			ft_close_x(t_data *data);
 void		while_closed(t_data *data, char **map, int x, int *y);
+void		texture_storage(t_data *data, char *line);
 
 /////////////  DRAWING ///////////////////////
 
@@ -97,5 +98,11 @@ void		ft_free_list(t_data *data);
 int			rendering_texcolor(t_data *data, int tex_x, \
 t_index ray, t_check check);
 t_index		add_step(t_index inter, t_index step);
+int			ft_mouse_release(int mouse, int x, int y, t_data *data);
+int			mouvment_mouse(int x, int y, t_data *data);
+double		best_wall_distance(t_data *data, t_index *ray, t_index player);
+void		door_distance(t_data *data, t_index player);
+int			ft_check_wall(t_data *data, double x_plus, double y_plus);
+void		movement_key(t_data *data, t_index step);
 
 #endif
